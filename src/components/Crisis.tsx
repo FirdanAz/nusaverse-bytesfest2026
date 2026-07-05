@@ -180,7 +180,7 @@ export default function Crisis() {
 
         {/* Stats Grid cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="p-8 border border-red-500/8 hover:border-red-500/40 rounded-2xl bg-red-500/1 text-left relative transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_10_30px_rgba(239,68,68,0.05)]">
+          <div className="p-8 border border-red-500/8 hover:border-red-500/40 rounded-2xl bg-red-500/1 text-left relative transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_10px_30px_rgba(239,68,68,0.05)]">
             <div className="w-11 h-11 bg-red-500/10 rounded-xl flex items-center justify-center text-red-500 mb-6">
               <Skull size={20} />
             </div>
@@ -188,7 +188,7 @@ export default function Crisis() {
             <div className="text-sm text-white/70">{t("crisis-card-1")}</div>
           </div>
 
-          <div className="p-8 border border-red-500/8 hover:border-red-500/40 rounded-2xl bg-red-500/1 text-left relative transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_10_30px_rgba(239,68,68,0.05)]">
+          <div className="p-8 border border-red-500/8 hover:border-red-500/40 rounded-2xl bg-red-500/1 text-left relative transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_10px_30px_rgba(239,68,68,0.05)]">
             <div className="w-11 h-11 bg-red-500/10 rounded-xl flex items-center justify-center text-red-500 mb-6">
               <TrendingDown size={20} />
             </div>
@@ -196,7 +196,7 @@ export default function Crisis() {
             <div className="text-sm text-white/70">{t("crisis-card-2")}</div>
           </div>
 
-          <div className="p-8 border border-red-500/8 hover:border-red-500/40 rounded-2xl bg-red-500/1 text-left relative transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_10_30px_rgba(239,68,68,0.05)]">
+          <div className="p-8 border border-red-500/8 hover:border-red-500/40 rounded-2xl bg-red-500/1 text-left relative transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_10px_30px_rgba(239,68,68,0.05)]">
             <div className="w-11 h-11 bg-red-500/10 rounded-xl flex items-center justify-center text-red-500 mb-6">
               <AlertTriangle size={20} />
             </div>
@@ -204,7 +204,7 @@ export default function Crisis() {
             <div className="text-sm text-white/70">{t("crisis-card-3")}</div>
           </div>
 
-          <div className="p-8 border border-red-500/8 hover:border-red-500/40 rounded-2xl bg-red-500/1 text-left relative transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_10_30px_rgba(239,68,68,0.05)]">
+          <div className="p-8 border border-red-500/8 hover:border-red-500/40 rounded-2xl bg-red-500/1 text-left relative transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_10px_30px_rgba(239,68,68,0.05)]">
             <div className="w-11 h-11 bg-red-500/10 rounded-xl flex items-center justify-center text-red-500 mb-6">
               <BookOpen size={20} />
             </div>

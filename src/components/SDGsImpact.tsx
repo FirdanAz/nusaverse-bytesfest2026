@@ -94,15 +94,15 @@ export default function SDGsImpact() {
       <div className="container">
         
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/3 border border-gold-primary rounded-full text-[11px] font-bold tracking-widest uppercase text-gold-light mb-4 shadow-[0_0_15px_rgba(212,175,55,0.1)]">
+        <div className="text-center" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div className="eyebrow-chip">
             <Globe size={12} />
             <span>{t("sdg-eyebrow")}</span>
           </div>
-          <h2 className="text-display text-3xl sm:text-4xl md:text-5xl font-black mb-4">
+          <h2 className="section-title">
             {t("sdg-title-1")} <span className="text-gradient-gold">{t("sdg-title-2")}</span>
           </h2>
-          <p className="text-sm sm:text-base text-white/70 max-w-[650px] leading-relaxed">
+          <p className="section-subtitle">
             {t("sdg-subtitle")}
           </p>
         </div>
@@ -116,7 +116,8 @@ export default function SDGsImpact() {
               data-sdg={card.id}
             >
               <div className="sdg-icon-box">
-                SDG {card.id}
+                <span className="text-[10px] opacity-75 font-semibold tracking-wider">SDG</span>
+                <span className="text-[16px] font-extrabold leading-none mt-0.5">{card.id}</span>
               </div>
               
               <h4 className="sdg-card-title">{t(card.titleKey)}</h4>
@@ -141,7 +142,7 @@ export default function SDGsImpact() {
               </div>
 
               <span className="sdg-card-link">
-                {t("sdg-btn")} Dampak →
+                {t("sdg-btn")}
               </span>
             </div>
           ))}

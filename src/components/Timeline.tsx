@@ -33,15 +33,15 @@ export default function Timeline() {
       <div className="container">
         
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/3 border border-gold-primary rounded-full text-[11px] font-bold tracking-widest uppercase text-gold-light mb-4 shadow-[0_0_15px_rgba(212,175,55,0.1)]">
+        <div className="text-center" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div className="eyebrow-chip">
             <Hourglass size={12} className="animate-pulse" />
             <span>{t("time-eyebrow")}</span>
           </div>
-          <h2 className="text-display text-3xl sm:text-4xl md:text-5xl font-black mb-4">
+          <h2 className="section-title">
             {t("time-title")}
           </h2>
-          <p className="text-sm sm:text-base text-white/70 max-w-[650px] leading-relaxed">
+          <p className="section-subtitle">
             {t("time-subtitle")}
           </p>
         </div>

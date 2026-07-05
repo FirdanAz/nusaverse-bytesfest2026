@@ -184,7 +184,7 @@ export const ARTIFACTS_DATA: ArtifactData[] = [
         era_en: "16th Century",
         desc_id: "Senjata tikam legendaris dengan ukiran kepala singa berlapis emas pada pangkal bilahnya, menyimbolkan kekuatan, martabat raja, dan tameng pelindung spiritual.",
         desc_en: "A legendary dagger carved with a gold-coated lion head at the blade base, symbolizing power, royal status, and spiritual armor.",
-        image: "https://images.unsplash.com/photo-1615486511487-12f375156a88?auto=format&fit=crop&w=600&q=80",
+        image: "https://images.unsplash.com/photo-1604999333679-b86d54738315?auto=format&fit=crop&w=600&q=80",
         hotspot_1_title_id: "Hulu Singo",
         hotspot_1_title_en: "Lion Hilt",
         hotspot_1_desc_id: "Pegangan berukir megah melambangkan kewibawaan spiritual raja Jawa kuno.",
@@ -199,7 +199,7 @@ export const ARTIFACTS_DATA: ArtifactData[] = [
       {
         id: "wayang",
         category: "sacred",
-        title_id: "Wayang Kulit Kulit",
+        title_id: "Wayang Kulit",
         title_en: "Leather Wayang Puppet",
         origin_id: "Jawa Tengah",
         origin_en: "Central Java",

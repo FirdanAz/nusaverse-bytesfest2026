@@ -73,30 +73,26 @@ export default function CulturalMap() {
       <div className="container">
         
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/3 border border-gold-primary rounded-full text-[11px] font-bold tracking-widest uppercase text-gold-light mb-4 shadow-[0_0_15px_rgba(212,175,55,0.1)]">
+        <div className="text-center" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div className="eyebrow-chip">
             <MapPin size={12} />
             <span>{t("map-eyebrow")}</span>
           </div>
-          <h2 className="text-display text-3xl sm:text-4xl md:text-5xl font-black mb-4">
+          <h2 className="section-title">
             {t("map-title")}
           </h2>
-          <p className="text-sm sm:text-base text-white/70 max-w-[650px] leading-relaxed">
+          <p className="section-subtitle">
             {t("map-subtitle")}
           </p>
         </div>
 
         {/* Filter Pills */}
-        <div className="flex justify-center gap-2.5 mb-10 flex-wrap">
+        <div className="map-filter-bar">
           {filterChips.map((chip) => (
             <button
               key={chip.id}
               onClick={() => setActiveFilter(chip.id)}
-              className={`px-5 py-2.5 rounded-full text-xs font-semibold border cursor-pointer transition-all duration-300 ${
-                activeFilter === chip.id
-                  ? "bg-gold-primary border-gold-primary text-navy-deepest font-bold"
-                  : "bg-white/3 border-white/10 text-white/70 hover:border-gold-primary hover:text-white"
-              }`}
+              className={`filter-chip ${activeFilter === chip.id ? "active" : ""}`}
             >
               {chip.label}
             </button>
@@ -111,7 +107,7 @@ export default function CulturalMap() {
             ref={containerRef}
             onMouseMove={handleMapMouseMove}
             onMouseLeave={handleMapMouseLeave}
-            className="map-container"
+            className="interactive-map-panel"
           >
             {/* Map Component with filtered visibility */}
             <div className="w-full h-full">

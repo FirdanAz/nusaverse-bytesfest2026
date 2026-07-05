@@ -14,6 +14,35 @@ import SDGsImpact from "@/components/SDGsImpact";
 import Footer from "@/components/Footer";
 
 export default function Home() {
+  // Reset scroll to top and clear hash on page load/refresh
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    
+    // Clear hash
+    if (window.location.hash) {
+      window.history.replaceState(
+        null,
+        "",
+        window.location.pathname + window.location.search
+      );
+    }
+
+    // Lock scroll to top for the first 500ms to override browser auto-scrolling
+    window.scrollTo(0, 0);
+    let count = 0;
+    const interval = setInterval(() => {
+      window.scrollTo(0, 0);
+      count++;
+      if (count >= 10) {
+        clearInterval(interval);
+      }
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, []);
+
   // Global scroll reveal animations
   useEffect(() => {
     const reveals = document.querySelectorAll(".reveal");

@@ -10,11 +10,10 @@ export default function VirtualMuseum() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [selectedArtifactId, setSelectedArtifactId] = useState<string>("kris");
   
-  // 3D rotation simulation state
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStartX, setDragStartX] = useState(0);
-  const [rotationAngle, setRotationAngle] = useState(0);
-
+  // 3D perspective hologram tilt states
+  const [tiltX, setTiltX] = useState(0);
+  const [tiltY, setTiltY] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const viewerRef = useRef<HTMLDivElement>(null);
 
   const categories = [
@@ -32,58 +31,69 @@ export default function VirtualMuseum() {
   useEffect(() => {
     if (filteredArtifacts.length > 0) {
       setSelectedArtifactId(filteredArtifacts[0].id);
-      setRotationAngle(0);
+      setTiltX(0);
+      setTiltY(0);
     }
   }, [activeCategory]);
 
   const activeArtifact =
     ARTIFACTS_DATA.find((item) => item.id === selectedArtifactId) || ARTIFACTS_DATA[0];
 
-  // Drag handlers
-  const handleDragStart = (clientX: number) => {
-    setIsDragging(true);
-    setDragStartX(clientX);
+  // Mouse Move Tilt Handlers
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!viewerRef.current) return;
+    const rect = viewerRef.current.getBoundingClientRect();
+    
+    // Normalize cursor position: -0.5 to 0.5
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    
+    // Y-axis rotation based on X movement, X-axis rotation based on Y movement
+    setTiltY(x * 50); // -25deg to +25deg
+    setTiltX(-y * 36); // -18deg to +18deg
+    setIsHovered(true);
   };
 
-  const handleDragMove = (clientX: number) => {
-    if (!isDragging) return;
-    const deltaX = clientX - dragStartX;
-    setDragStartX(clientX);
-    setRotationAngle((prev) => prev + deltaX * 0.8);
+  const handleMouseLeave = () => {
+    setTiltX(0);
+    setTiltY(0);
+    setIsHovered(false);
   };
 
-  const handleDragEnd = () => {
-    setIsDragging(false);
+  // Touch handlers for mobile devices
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!viewerRef.current) return;
+    const rect = viewerRef.current.getBoundingClientRect();
+    const touch = e.touches[0];
+    
+    const x = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width)) - 0.5;
+    const y = Math.max(0, Math.min(1, (touch.clientY - rect.top) / rect.height)) - 0.5;
+    
+    setTiltY(x * 50);
+    setTiltX(-y * 36);
+    setIsHovered(true);
   };
 
-  useEffect(() => {
-    const handleGlobalMouseUp = () => {
-      setIsDragging(false);
-    };
-
-    window.addEventListener("mouseup", handleGlobalMouseUp);
-    window.addEventListener("touchend", handleGlobalMouseUp);
-
-    return () => {
-      window.removeEventListener("mouseup", handleGlobalMouseUp);
-      window.removeEventListener("touchend", handleGlobalMouseUp);
-    };
-  }, []);
+  const handleTouchEnd = () => {
+    setTiltX(0);
+    setTiltY(0);
+    setIsHovered(false);
+  };
 
   return (
     <section id="museum" className="museum-section section-padding reveal">
       <div className="container">
         
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/3 border border-gold-primary rounded-full text-[11px] font-bold tracking-widest uppercase text-gold-light mb-4 shadow-[0_0_15px_rgba(212,175,55,0.1)]">
+        <div className="text-center" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div className="eyebrow-chip">
             <Landmark size={12} />
             <span>{t("museum-eyebrow")}</span>
           </div>
-          <h2 className="text-display text-3xl sm:text-4xl md:text-5xl font-black mb-4">
+          <h2 className="section-title">
             {t("museum-title-1")} <span className="text-gradient-gold">{t("museum-title-2")}</span>
           </h2>
-          <p className="text-sm sm:text-base text-white/70 max-w-[650px] leading-relaxed">
+          <p className="section-subtitle">
             {t("museum-subtitle")}
           </p>
         </div>
@@ -140,54 +150,59 @@ export default function VirtualMuseum() {
             {/* Viewer Display */}
             <div
               ref={viewerRef}
-              onMouseDown={(e) => handleDragStart(e.clientX)}
-              onMouseMove={(e) => handleDragMove(e.clientX)}
-              onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
-              onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
               className="viewer-3d-box"
-              style={{ cursor: isDragging ? "grabbing" : "grab" }}
+              style={{ cursor: "pointer" }}
             >
-              {/* Rotating Image representation */}
-              <img
-                src={activeArtifact.image}
-                alt={currentLang === "id" ? activeArtifact.title_id : activeArtifact.title_en}
-                className="viewer-image"
+              <div
+                className="viewer-card-wrapper"
                 style={{
-                  transform: `rotateY(${rotationAngle}deg)`,
+                  transform: `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`,
+                  transition: isHovered ? "none" : "transform 0.5s ease",
                 }}
-              />
-
-              {/* Gold Hotspots pins */}
-              <div
-                className="hotspot"
-                style={{ top: activeArtifact.h1_top, left: activeArtifact.h1_left }}
               >
-                <div className="hotspot-annotation">
-                  <div className="hotspot-annotation-title">
-                    {currentLang === "id" ? activeArtifact.hotspot_1_title_id : activeArtifact.hotspot_1_title_en}
-                  </div>
-                  <div className="hotspot-annotation-text">
-                    {currentLang === "id" ? activeArtifact.hotspot_1_desc_id : activeArtifact.hotspot_1_desc_en}
+                {/* Rotating Image representation */}
+                <img
+                  src={activeArtifact.image}
+                  alt={currentLang === "id" ? activeArtifact.title_id : activeArtifact.title_en}
+                  className="viewer-image"
+                />
+
+                {/* Gold Hotspots pins */}
+                <div
+                  className="hotspot"
+                  style={{ top: activeArtifact.h1_top, left: activeArtifact.h1_left }}
+                >
+                  <div className="hotspot-annotation">
+                    <div className="hotspot-annotation-title">
+                      {currentLang === "id" ? activeArtifact.hotspot_1_title_id : activeArtifact.hotspot_1_title_en}
+                    </div>
+                    <div className="hotspot-annotation-text">
+                      {currentLang === "id" ? activeArtifact.hotspot_1_desc_id : activeArtifact.hotspot_1_desc_en}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div
-                className="hotspot"
-                style={{ top: activeArtifact.h2_top, left: activeArtifact.h2_left }}
-              >
-                <div className="hotspot-annotation">
-                  <div className="hotspot-annotation-title">
-                    {currentLang === "id" ? activeArtifact.hotspot_2_title_id : activeArtifact.hotspot_2_title_en}
-                  </div>
-                  <div className="hotspot-annotation-text">
-                    {currentLang === "id" ? activeArtifact.hotspot_2_desc_id : activeArtifact.hotspot_2_desc_en}
+                <div
+                  className="hotspot"
+                  style={{ top: activeArtifact.h2_top, left: activeArtifact.h2_left }}
+                >
+                  <div className="hotspot-annotation">
+                    <div className="hotspot-annotation-title">
+                      {currentLang === "id" ? activeArtifact.hotspot_2_title_id : activeArtifact.hotspot_2_title_en}
+                    </div>
+                    <div className="hotspot-annotation-text">
+                      {currentLang === "id" ? activeArtifact.hotspot_2_desc_id : activeArtifact.hotspot_2_desc_en}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Rotation Ring base indicator */}
-              <div className="rotation-ring"></div>
+                {/* Rotation Ring base indicator */}
+                <div className="rotation-ring"></div>
+              </div>
             </div>
 
             {/* Viewer Guidelines instructions */}
