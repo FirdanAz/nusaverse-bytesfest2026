@@ -1364,7 +1364,341 @@
       color: var(--white);
     }
 
-    /* ─── 06 · TIME TRAVEL EXPERIENCE ─────────────────────────────────── */
+    /* ─── Museum Premium Additions ──────────────────────────────────────── */
+
+    /* Museum background: radial glow + grid lines */
+    .museum-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      overflow: hidden;
+    }
+    .museum-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.06) 0%, transparent 60%),
+        radial-gradient(circle at 70% 50%, rgba(34, 211, 238, 0.04) 0%, transparent 55%);
+    }
+    .museum-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* Auto-float keyframe */
+    @keyframes artifact-float {
+      0%, 100% { transform: translateY(0px) scale(1) rotate(0deg); }
+      50%       { transform: translateY(-12px) scale(1.01) rotate(0.4deg); }
+    }
+
+    /* Skeleton shimmer */
+    @keyframes skeleton-shimmer {
+      0%   { background-position: -400px 0; }
+      100% { background-position: 400px 0; }
+    }
+    .artifact-skeleton {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0.03) 0%,
+        rgba(255,255,255,0.08) 40%,
+        rgba(255,255,255,0.03) 80%
+      );
+      background-size: 800px 100%;
+      animation: skeleton-shimmer 1.2s linear infinite;
+    }
+
+    /* Gradient-border viewer wrapper */
+    .viewer-premium-wrap {
+      position: relative;
+      border-radius: 20px;
+      padding: 1.5px;
+      background: linear-gradient(
+        135deg,
+        rgba(212, 175, 55, 0.5) 0%,
+        rgba(255,255,255,0.05) 40%,
+        rgba(34, 211, 238, 0.3) 100%
+      );
+      box-shadow: 0 0 40px rgba(212, 175, 55, 0.08), 0 20px 60px rgba(0,0,0,0.5);
+      margin-bottom: 20px;
+    }
+    .viewer-premium-inner {
+      border-radius: 19px;
+      background: rgba(5, 10, 20, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      /* overflow must stay visible so hotspot tooltips render above the border */
+      overflow: visible;
+      position: relative;
+    }
+
+    /* Artifact viewer stage */
+    .viewer-stage {
+      width: 100%;
+      height: 320px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+      border-radius: 19px;
+      overflow: hidden;
+    }
+
+    /* Floating artifact wrapper */
+    .artifact-float-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+    }
+
+    /* Next/Image override inside viewer */
+    .viewer-artifact-img {
+      max-height: 85%;
+      max-width: 85%;
+      object-fit: contain !important;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.7));
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Hotspot premium dot */
+    .hotspot-dot {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--gold-primary);
+      border: 2px solid rgba(255,255,255,0.8);
+      cursor: pointer;
+      z-index: 20;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.7);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hotspot-dot:hover,
+    .hotspot-dot.active {
+      transform: translate(-50%, -50%) scale(1.3);
+      box-shadow: 0 0 22px rgba(212, 175, 55, 1);
+    }
+    .hotspot-dot::after {
+      content: '';
+      position: absolute;
+      top: -7px; left: -7px;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(212, 175, 55, 0.6);
+      animation: pulse-ring 2s ease-out infinite;
+    }
+    .hotspot-dot.active::after {
+      border-color: rgba(212, 175, 55, 1);
+    }
+
+    /* Glassmorphism tooltip */
+    .hotspot-tooltip {
+      position: absolute;
+      bottom: calc(100% + 14px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 240px;
+      background: rgba(5, 12, 25, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 12px;
+      padding: 14px;
+      z-index: 50;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .hotspot-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: rgba(212, 175, 55, 0.4);
+    }
+    .tooltip-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+    .tooltip-desc {
+      font-size: 12px;
+      color: var(--white-80);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .tooltip-row {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .tooltip-row-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--cyan-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .tooltip-row-val {
+      font-size: 11px;
+      color: var(--white-70);
+      line-height: 1.4;
+    }
+
+    /* Viewer hint bar */
+    .viewer-hints {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 20px 14px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .viewer-hint-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--white-50);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .hint-dot-gold {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold-primary);
+      flex-shrink: 0;
+    }
+
+    /* Rotation ring base */
+    .viewer-rotation-ring {
+      position: absolute;
+      bottom: 16px;
+      width: 120px;
+      height: 8px;
+      border-radius: 50%;
+      border-bottom: 2px solid rgba(212,175,55,0.25);
+      pointer-events: none;
+    }
+
+    /* Info panel (below viewer) */
+    .museum-info-panel {
+      padding: 20px 24px 24px;
+    }
+    .museum-info-name {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--gold-primary);
+      margin-bottom: 8px;
+      font-family: var(--font-display);
+    }
+    .museum-info-desc {
+      font-size: 13px;
+      color: var(--white-70);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .museum-info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 16px;
+      margin-bottom: 14px;
+    }
+    .museum-info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .museum-info-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--white-50);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .museum-info-val {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--white-90);
+    }
+    .museum-unesco-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 100px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 0.06em;
+    }
+
+    /* Category chip — compact version for museum */
+    .museum-cat-chip {
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--white-70);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: 0.05em;
+    }
+    .museum-cat-chip:hover {
+      border-color: rgba(212, 175, 55, 0.5);
+      color: var(--white);
+      background: rgba(212, 175, 55, 0.06);
+    }
+    .museum-cat-chip.active {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: var(--gold-primary);
+      color: var(--gold-light);
+    }
+
+    /* Artifact card hover glow */
+    .artifact-card-glow {
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      background: radial-gradient(circle at 50% 0%, rgba(212,175,55,0.1) 0%, transparent 70%);
+    }
+    .artifact-card:hover .artifact-card-glow {
+      opacity: 1;
+    }
+
+
     .travel-section {
       background-color: var(--navy-deepest);
       transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2744,3 +3078,64 @@
       opacity: 0.1;
       line-height: 1;
     }
+
+    /* ─── Spin utility (used by viewer hint icon) ───────────────────── */
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* ─── Museum Section — Responsive ───────────────────────────────── */
+    @media (max-width: 1024px) {
+      .museum-cards-container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .museum-showroom {
+        position: static;
+      }
+      .museum-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .museum-cards-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .museum-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+      .viewer-stage {
+        height: 260px;
+      }
+      .museum-info-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .hotspot-tooltip {
+        width: 200px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .museum-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .artifact-img-box {
+        height: 110px;
+      }
+      .viewer-stage {
+        height: 220px;
+      }
+      .museum-info-grid {
+        grid-template-columns: 1fr;
+      }
+      .viewer-hints {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+    }

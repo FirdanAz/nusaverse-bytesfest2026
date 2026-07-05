@@ -22,30 +22,47 @@ export interface LanguageData {
   alphabet: Array<{ native: string; roman: string; sound: string }>;
 }
 
+export interface Hotspot {
+  id: string;
+  /** Percentage from left edge of image container */
+  x: number;
+  /** Percentage from top edge of image container */
+  y: number;
+  title_id: string;
+  title_en: string;
+  desc_id: string;
+  desc_en: string;
+  material_id?: string;
+  material_en?: string;
+  meaning_id?: string;
+  meaning_en?: string;
+}
+
+export type ArtifactCategory =
+  | "sacred"
+  | "textiles"
+  | "weapons"
+  | "music"
+  | "architecture";
+
 export interface ArtifactData {
   id: string;
-  category: "sacred" | "textiles" | "weapons";
+  category: ArtifactCategory;
   title_id: string;
   title_en: string;
   origin_id: string;
   origin_en: string;
   era_id: string;
   era_en: string;
+  material_id: string;
+  material_en: string;
   desc_id: string;
   desc_en: string;
   image: string;
-  hotspot_1_title_id: string;
-  hotspot_1_title_en: string;
-  hotspot_1_desc_id: string;
-  hotspot_1_desc_en: string;
-  hotspot_2_title_id: string;
-  hotspot_2_title_en: string;
-  hotspot_2_desc_id: string;
-  hotspot_2_desc_en: string;
-  h1_top: string;
-  h1_left: string;
-  h2_top: string;
-  h2_left: string;
+  /** Optional UNESCO recognition status */
+  unesco?: string;
+  /** Array of interactive hotspot annotations on the artifact image */
+  hotspots: Hotspot[];
 }
 
 export interface HistoricalEvent {
