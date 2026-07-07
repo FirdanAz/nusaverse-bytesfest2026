@@ -81,19 +81,8 @@ export default function VirtualMuseum() {
         {/* ── Main Split Layout ────────────────────────────────────────── */}
         <div className="museum-cards-container">
 
-          {/* Left: Artifact list with category filter */}
-          <ArtifactList
-            artifacts={ARTIFACTS_DATA}
-            selectedId={selectedId}
-            lang={currentLang}
-            activeCategory={activeCategory}
-            onSelect={handleSelect}
-            onCategoryChange={setActiveCategory}
-            t={t}
-          />
-
-          {/* Right: Sticky viewer + info panel */}
-          <div className="museum-showroom glass-card" style={{ padding: 0 }}>
+          {/* 1. Viewer Area (grid-area: viewer) */}
+          <div className="viewer-area glass-card" style={{ padding: 0 }}>
             <ArtifactViewer
               artifact={activeArtifact}
               activeHotspotId={activeHotspotId}
@@ -102,9 +91,26 @@ export default function VirtualMuseum() {
               onCloseHotspot={handleCloseHotspot}
               t={t}
             />
+          </div>
+
+          {/* 2. Information Area (grid-area: info) */}
+          <div className="info-area glass-card" style={{ padding: 0 }}>
             <InfoPanel
               artifact={activeArtifact}
               lang={currentLang}
+              t={t}
+            />
+          </div>
+
+          {/* 3. Navigation Area (grid-area: nav) */}
+          <div className="nav-area">
+            <ArtifactList
+              artifacts={ARTIFACTS_DATA}
+              selectedId={selectedId}
+              lang={currentLang}
+              activeCategory={activeCategory}
+              onSelect={handleSelect}
+              onCategoryChange={setActiveCategory}
               t={t}
             />
           </div>

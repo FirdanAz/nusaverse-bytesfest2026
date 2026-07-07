@@ -28,6 +28,8 @@ export interface Hotspot {
   x: number;
   /** Percentage from top edge of image container */
   y: number;
+  /** Optional custom horizontal line length offset (percentage, e.g. -15 or 15) */
+  length?: number;
   title_id: string;
   title_en: string;
   desc_id: string;
