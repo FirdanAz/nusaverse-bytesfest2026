@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import HeroMap from "./maps/HeroMap";
 import CountUp from "./CountUp";
+import HeroCinematicBg from "./HeroCinematicBg";
 import { Globe, ArrowRight, Play, Languages, Users, Map } from "lucide-react";
 
 export default function Hero() {
@@ -112,6 +113,9 @@ export default function Hero() {
 
   return (
     <section id="hero" className="hero-section reveal">
+      {/* Cinematic Background — Cultural Discovery Spotlight */}
+      <HeroCinematicBg />
+
       {/* Floating Canvas Background */}
       <canvas ref={canvasRef} id="hero-canvas" className="absolute top-0 left-0 w-full h-full pointer-events-none z-[1]"></canvas>
 

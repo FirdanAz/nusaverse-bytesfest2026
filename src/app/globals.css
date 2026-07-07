@@ -411,8 +411,7 @@
       position: relative;
       padding-top: 100px;
       overflow: hidden;
-      background: radial-gradient(circle at 30% 40%, rgba(212, 175, 55, 0.04) 0%, transparent 50%),
-                  radial-gradient(circle at 70% 60%, rgba(34, 211, 238, 0.03) 0%, transparent 50%);
+      background: #030A14;
     }
 
     /* Floating Particles Background */
@@ -425,6 +424,238 @@
       pointer-events: none;
       z-index: 1;
     }
+
+    /* ─── HeroCinematicBg ──────────────────────────────────────────────── */
+
+    /* Root wrapper — fills the hero section absolutely */
+    .hcb-root {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      isolation: isolate; /* Create new stacking context so mix-blend-mode does not bleed into foreground cards/content */
+    }
+
+    /* ── Layer 1: dark cinematic base ── */
+    .hcb-layer-dark {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 28% 42%, rgba(212,175,55,0.055) 0%, transparent 65%),
+        radial-gradient(ellipse 65% 55% at 72% 62%, rgba(34,211,238,0.04) 0%, transparent 65%),
+        linear-gradient(165deg, #07111F 0%, #030A14 55%, #050E1A 100%);
+      animation: hcb-ambient 60s ease-in-out infinite alternate;
+    }
+
+    /* Ambient glow orbs */
+    .hcb-glow {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(60px);
+      animation: hcb-glow-pulse 8s ease-in-out infinite alternate;
+    }
+    .hcb-glow-gold {
+      width: 480px;
+      height: 480px;
+      top: 10%;
+      left: 12%;
+      background: radial-gradient(circle, rgba(212,175,55,0.07) 0%, transparent 70%);
+      animation-delay: 0s;
+    }
+    .hcb-glow-cyan {
+      width: 400px;
+      height: 400px;
+      bottom: 8%;
+      right: 18%;
+      background: radial-gradient(circle, rgba(34,211,238,0.055) 0%, transparent 70%);
+      animation-delay: -4s;
+    }
+
+    /* SVG topographic contours */
+    .hcb-contours {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .hcb-contour-line {
+      animation: hcb-contour 30s linear infinite;
+    }
+
+    /* Indonesia wireframe silhouette */
+    .hcb-silhouette {
+      position: absolute;
+      bottom: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 85%;
+      max-width: 900px;
+      pointer-events: none;
+    }
+
+    /* ── Layer 2: cultural reveal ── */
+    .hcb-layer-cultural {
+      position: absolute;
+      inset: 0;
+      -webkit-mask-image: radial-gradient(
+        circle 290px at var(--sx, -999px) var(--sy, -999px),
+        black 0%, black 55%, transparent 100%
+      );
+      mask-image: radial-gradient(
+        circle 290px at var(--sx, -999px) var(--sy, -999px),
+        black 0%, black 55%, transparent 100%
+      );
+      will-change: mask-image;
+      mix-blend-mode: screen;
+      opacity: 0.88;
+    }
+    .hcb-cultural-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Hotspots ── */
+    .hcb-hotspot {
+      position: absolute;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+    }
+
+    /* The pulsing dot button */
+    .hcb-dot {
+      pointer-events: auto;
+      display: block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      background: rgba(212,175,55, calc(0.35 + var(--glow, 0) * 0.45));
+      box-shadow:
+        0 0 calc(6px + var(--glow, 0) * 18px) calc(1px + var(--glow, 0) * 8px)
+          rgba(212,175,55, calc(0.3 + var(--glow, 0) * 0.5)),
+        0 0 0 calc(3px + var(--glow, 0) * 8px)
+          rgba(212,175,55, calc(0.08 + var(--glow, 0) * 0.18));
+      transition: background 0.15s ease, box-shadow 0.15s ease;
+      animation: hcb-dot-pulse 3s ease-in-out infinite;
+      outline: none;
+    }
+    .hcb-dot:focus-visible {
+      outline: 2px solid #D4AF37;
+      outline-offset: 3px;
+    }
+
+    /* Tooltip card */
+    .hcb-tooltip {
+      pointer-events: none;
+      position: absolute;
+      bottom: calc(100% + 14px);
+      left: 50%;
+      transform: translateX(-50%) translateY(6px) scale(0.92);
+      min-width: 168px;
+      padding: 12px 14px 12px 14px;
+      background: rgba(3, 10, 20, 0.92);
+      border: 1px solid rgba(212,175,55,0.45);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7), 0 0 20px rgba(212,175,55,0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      opacity: 0;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      white-space: nowrap;
+    }
+    .hcb-tooltip--open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+    .hcb-tooltip-close {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.45);
+      font-size: 16px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0 2px;
+      transition: color 0.15s ease;
+    }
+    .hcb-tooltip-close:hover { color: #D4AF37; }
+    .hcb-tooltip-emoji {
+      font-size: 16px;
+      line-height: 1;
+    }
+    .hcb-tooltip-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #D4AF37;
+      font-family: var(--font-display);
+    }
+    .hcb-tooltip-sub {
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Keyframes ── */
+    @keyframes hcb-ambient {
+      0%   { filter: brightness(1);    }
+      50%  { filter: brightness(1.04); }
+      100% { filter: brightness(0.97); }
+    }
+    @keyframes hcb-glow-pulse {
+      0%   { opacity: 0.7; transform: scale(1);    }
+      100% { opacity: 1;   transform: scale(1.12); }
+    }
+    @keyframes hcb-contour {
+      from { stroke-dashoffset: 0;     }
+      to   { stroke-dashoffset: -2200; }
+    }
+    @keyframes hcb-dot-pulse {
+      0%, 100% { transform: scale(1);    }
+      50%      { transform: scale(1.25); }
+    }
+
+    /* Floating badge animations (used by Hero.tsx floating badges) */
+    .animate-float-1 { animation: hcb-badge-float-1 4.5s ease-in-out infinite; }
+    .animate-float-2 { animation: hcb-badge-float-2 5.5s ease-in-out infinite; }
+    .animate-float-3 { animation: hcb-badge-float-3 6s   ease-in-out infinite; }
+    @keyframes hcb-badge-float-1 {
+      0%, 100% { transform: translateY(0px);   }
+      50%      { transform: translateY(-8px);  }
+    }
+    @keyframes hcb-badge-float-2 {
+      0%, 100% { transform: translateY(0px);   }
+      50%      { transform: translateY(-12px); }
+    }
+    @keyframes hcb-badge-float-3 {
+      0%, 100% { transform: translateY(0px);  }
+      50%      { transform: translateY(-6px); }
+    }
+
+    /* prefers-reduced-motion overrides */
+    @media (prefers-reduced-motion: reduce) {
+      .hcb-layer-dark   { animation: none !important; }
+      .hcb-glow         { animation: none !important; }
+      .hcb-contour-line { animation: none !important; }
+      .hcb-dot          { animation: none !important; }
+      .animate-float-1,
+      .animate-float-2,
+      .animate-float-3  { animation: none !important; }
+    }
+
 
     .hero-container {
       position: relative;
@@ -499,15 +730,52 @@
     .hero-showcase {
       position: relative;
       width: 100%;
-      height: 480px;
+      height: 420px; /* Reduced from 480px to align perfectly with left-side text height */
       border-radius: 24px;
-      background: var(--navy-mid);
-      border: 1px solid var(--navy-border);
+      background: rgba(13, 31, 54, 0.85); /* Glassmorphic background with increased opacity */
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       overflow: hidden;
       box-shadow: 0 20px 50px rgba(0,0,0,0.6);
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .hero-showcase:hover {
+      transform: translateY(-4px);
+      border-color: rgba(34, 211, 238, 0.25);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.75), 0 0 30px rgba(34, 211, 238, 0.05);
+    }
+
+    /* Responsive scaling for showcase container */
+    @media (max-width: 1024px) {
+      .hero-showcase {
+        height: 380px;
+      }
+    }
+    @media (max-width: 768px) {
+      .hero-showcase {
+        height: 320px;
+      }
+      /* Scale the badges down on smaller viewport widths */
+      .floating-badge {
+        padding: 8px 12px !important;
+        border-radius: 12px !important;
+      }
+      .floating-badge span.text-display {
+        font-size: 14px !important;
+      }
+      .floating-badge span.text-\[10px\] {
+        font-size: 9px !important;
+      }
+    }
+    @media (max-width: 480px) {
+      .hero-showcase {
+        height: 270px;
+      }
     }
 
     .hero-showcase::before {
@@ -2719,7 +2987,7 @@
       align-items: center;
       gap: 12px;
       padding: 12px 18px;
-      background: rgba(7, 17, 31, 0.6);
+      background: rgba(7, 17, 31, 0.88); /* Increased opacity for better readability and solid appearance */
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
