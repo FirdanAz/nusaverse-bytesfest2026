@@ -2,7 +2,10 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { ArtifactData, ArtifactCategory } from "@/types";
-import { Search, ArrowUpDown, ChevronDown, ChevronUp, Compass, Landmark, Calendar } from "lucide-react";
+import {
+  Search, ArrowUpDown, ChevronDown, ChevronUp,
+  LayoutGrid, Sword, Leaf, Layers, Music, Building2, MapPin
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import ArtifactCard from "./ArtifactCard";
 import Image from "next/image";
@@ -17,12 +20,12 @@ interface ArtifactListProps {
   t: (key: string) => string;
 }
 
-const CATEGORY_KEYS: { id: ArtifactCategory; key: string; icon: string }[] = [
-  { id: "weapons",      key: "cat-weapons",      icon: "⚔" },
-  { id: "sacred",       key: "cat-sacred",       icon: "🌿" },
-  { id: "textiles",     key: "cat-textiles",     icon: "🧵" },
-  { id: "music",        key: "cat-music",        icon: "🎵" },
-  { id: "architecture", key: "cat-architecture", icon: "🏛" },
+const CATEGORY_KEYS: { id: ArtifactCategory; key: string; icon: React.ReactNode }[] = [
+  { id: "weapons",      key: "cat-weapons",      icon: <Sword     size={13} /> },
+  { id: "sacred",       key: "cat-sacred",       icon: <Leaf      size={13} /> },
+  { id: "textiles",     key: "cat-textiles",     icon: <Layers    size={13} /> },
+  { id: "music",        key: "cat-music",        icon: <Music     size={13} /> },
+  { id: "architecture", key: "cat-architecture", icon: <Building2 size={13} /> },
 ];
 
 const CATEGORY_NAMES_FALLBACK: Record<ArtifactCategory, Record<"id" | "en", string>> = {
@@ -33,13 +36,13 @@ const CATEGORY_NAMES_FALLBACK: Record<ArtifactCategory, Record<"id" | "en", stri
   architecture: { id: "Candi & Rumah Adat",  en: "Architecture & Houses" },
 };
 
-const FILTER_CATEGORIES = [
-  { id: "all",          key: "cat-all",          icon: "✦", fallback: { id: "Semua", en: "All" } },
-  { id: "weapons",      key: "cat-weapons",      icon: "⚔", fallback: { id: "Senjata", en: "Weapons" } },
-  { id: "sacred",       key: "cat-sacred",       icon: "🌿", fallback: { id: "Sakral", en: "Sacred" } },
-  { id: "textiles",     key: "cat-textiles",     icon: "🧵", fallback: { id: "Tekstil", en: "Textiles" } },
-  { id: "music",        key: "cat-music",        icon: "🎵", fallback: { id: "Musik", en: "Music" } },
-  { id: "architecture", key: "cat-architecture", icon: "🏛", fallback: { id: "Arsitektur", en: "Architecture" } },
+const FILTER_CATEGORIES: { id: string; key: string; icon: React.ReactNode; fallback: { id: string; en: string } }[] = [
+  { id: "all",          key: "cat-all",          icon: <LayoutGrid size={11} />, fallback: { id: "Semua", en: "All" } },
+  { id: "weapons",      key: "cat-weapons",      icon: <Sword     size={11} />, fallback: { id: "Senjata", en: "Weapons" } },
+  { id: "sacred",       key: "cat-sacred",       icon: <Leaf      size={11} />, fallback: { id: "Sakral", en: "Sacred" } },
+  { id: "textiles",     key: "cat-textiles",     icon: <Layers    size={11} />, fallback: { id: "Tekstil", en: "Textiles" } },
+  { id: "music",        key: "cat-music",        icon: <Music     size={11} />, fallback: { id: "Musik", en: "Music" } },
+  { id: "architecture", key: "cat-architecture", icon: <Building2 size={11} />, fallback: { id: "Arsitektur", en: "Architecture" } },
 ];
 
 export default function ArtifactList({
@@ -328,7 +331,7 @@ export default function ArtifactList({
               borderRadius: "6px"
             }}
           >
-            📍 {activeOrigin}
+            <MapPin size={9} style={{ flexShrink: 0 }} /> {activeOrigin}
           </span>
         </motion.div>
       </AnimatePresence>

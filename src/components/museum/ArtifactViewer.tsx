@@ -13,7 +13,7 @@ import {
 } from "framer-motion";
 import HotspotLayer from "./HotspotLayer";
 import MuseumBackground from "./MuseumBackground";
-import { RotateCw } from "lucide-react";
+import { RotateCw, Sword, Leaf, Layers, Music, Building2 } from "lucide-react";
 
 interface ArtifactViewerProps {
   artifact: ArtifactData;
@@ -350,13 +350,15 @@ export default function ArtifactViewer({
                         flexDirection: "column",
                         alignItems: "center",
                         justifyContent: "center",
-                        fontSize: "64px",
                         color: "var(--gold-primary)",
-                        textShadow: "0 0 30px rgba(212, 175, 55, 0.4)",
                         transform: "translateZ(30px)"
                       }}>
-                        <span>{artifact.category === "weapons" ? "⚔" : artifact.category === "sacred" ? "🌿" : artifact.category === "textiles" ? "🧵" : artifact.category === "music" ? "🎵" : "🏛"}</span>
-                        <span style={{ fontSize: "14px", color: "var(--white-50)", marginTop: "12px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                        {artifact.category === "weapons"      ? <Sword     size={56} /> :
+                         artifact.category === "sacred"       ? <Leaf      size={56} /> :
+                         artifact.category === "textiles"     ? <Layers    size={56} /> :
+                         artifact.category === "music"        ? <Music     size={56} /> :
+                                                                <Building2 size={56} />}
+                        <span style={{ fontSize: "14px", color: "var(--white-50)", marginTop: "16px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                           {lang === "id" ? "Gambar belum tersedia" : "Image not available yet"}
                         </span>
                       </div>

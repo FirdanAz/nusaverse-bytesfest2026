@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { ArtifactData, ArtifactCategory } from "@/types";
 import Image from "next/image";
-import { Compass, Calendar, Tag } from "lucide-react";
+import { Compass, Calendar, Sword, Leaf, Layers, Music, Building2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface ArtifactCardProps {
@@ -22,12 +22,12 @@ const CATEGORY_COLORS: Record<ArtifactCategory, string> = {
   architecture: "rgba(52,211,153,0.05)",
 };
 
-const CATEGORY_ICONS: Record<ArtifactCategory, string> = {
-  weapons:      "⚔",
-  sacred:       "🌿",
-  textiles:     "🧵",
-  music:        "🎵",
-  architecture: "🏛",
+const CATEGORY_ICONS: Record<ArtifactCategory, React.ReactNode> = {
+  weapons:      <Sword      size={14} />,
+  sacred:       <Leaf       size={14} />,
+  textiles:     <Layers     size={14} />,
+  music:        <Music      size={14} />,
+  architecture: <Building2  size={14} />,
 };
 
 export default function ArtifactCard({
