@@ -10,7 +10,7 @@ export const ISLANDS_DATA: Record<string, IslandData> = {
     unesco: "Hutan Hujan Sumatra",
     desc_id: "Situs kerajaan Sriwijaya purba yang perkasa. Wilayah ini kaya akan kebudayaan bernuansa melayu, tarian tradisional piring di Minangkabau, dan tradisi lompat batu yang menantang maut di Pulau Nias.",
     desc_en: "Home of the powerful ancient Sriwijaya kingdom. Rich with Malay-influenced traditions, Minangkabau plate dances, and Nias Island's death-defying stone jumping rituals.",
-    image: "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=600&q=80"
+    image: "/assets/images/pulau/sumatera.jfif"
   },
   java: {
     title_id: "Jawa",
@@ -21,7 +21,7 @@ export const ISLANDS_DATA: Record<string, IslandData> = {
     unesco: "Batik, Candi Borobudur & Wayang",
     desc_id: "Episentrum kerajaan Hindu-Buddha dan Islam di masa lalu. Menyimpan warisan agung berupa batik tulis halus, musik gamelan yang mistik, pertunjukan wayang kulit, serta kemegahan candi Borobudur.",
     desc_en: "The historical epicenter of great Hindu-Buddhist and Islamic sultanates. Hosts masterworks of hand-drawn Batik, mystical gamelan music, shadow puppetry, and Borobudur Temple.",
-    image: "https://images.unsplash.com/photo-1604999333679-b86d54738315?auto=format&fit=crop&w=600&q=80"
+    image: "/assets/images/pulau/jawa.jfif"
   },
   kalimantan: {
     title_id: "Kalimantan",
@@ -32,7 +32,7 @@ export const ISLANDS_DATA: Record<string, IslandData> = {
     unesco: "Hutan Tropis Kalimantan",
     desc_id: "Paru-paru dunia dengan peradaban sungai yang kental. Wilayah suku Dayak yang melestarikan arsitektur rumah lamin panjang, tari perang kancet papatai, dan anyaman manik-manik bermotif kosmis.",
     desc_en: "The lungs of the earth with robust riverine traditions. Home to the Dayak tribe who preserve longhouse architecture, Kancet Papatai war dances, and cosmic bead weavings.",
-    image: "https://images.unsplash.com/photo-1504470695779-75300268aa0e?auto=format&fit=crop&w=600&q=80"
+    image: "/assets/images/pulau/kalimantan.jfif"
   },
   sulawesi: {
     title_id: "Sulawesi",
@@ -43,7 +43,7 @@ export const ISLANDS_DATA: Record<string, IslandData> = {
     unesco: "Situs Praaksara Maros & Kapal Phinisi",
     desc_id: "Pertemuan kebudayaan unik. Terkenal akan keahlian maritim suku Bugis pembuat kapal phinisi tradisional, ritual pemakaman Rambu Solo yang agung di Tana Toraja, dan tarian kipas pakarena.",
     desc_en: "A cultural crossroads. Renowned for the seafaring Bugis who build Phinisi ships, the grand Rambu Solo funeral ceremonies in Tana Toraja, and Pakarena fan dances.",
-    image: "https://images.unsplash.com/photo-1542856391-010fb87dcfed?auto=format&fit=crop&w=600&q=80"
+    image: "/assets/images/pulau/sulawesi.jfif"
   },
   nusatenggara: {
     title_id: "Bali & Nusa Tenggara",
@@ -54,7 +54,7 @@ export const ISLANDS_DATA: Record<string, IslandData> = {
     unesco: "Sistem Subak Bali",
     desc_id: "Daerah dengan estetika ritual spiritual tertinggi. Mulai dari sistem pengairan subak Hindu Bali, tari kecak kolosal, upacara ngaben, hingga tenun ikat ikat lombok dan ketukan musik mbojo.",
     desc_en: "Regions of supreme spiritual aesthetic. Home to the Subak water temples of Bali, colossal Kecak fire dances, Ngaben cremations, and Lombok's handwoven ikat textiles.",
-    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80"
+    image: "/assets/images/pulau/nusa tenggara dan bali.jfif"
   },
   papua: {
     title_id: "Papua & Maluku",
@@ -65,7 +65,7 @@ export const ISLANDS_DATA: Record<string, IslandData> = {
     unesco: "Warisan Budaya Raja Ampat",
     desc_id: "Lumbung kekayaan bahasa dunia. Merupakan wilayah suku Asmat pembuat patung kayu magis, tradisi tifa kolosal, kepulauan rempah Maluku dengan musik tifa, serta tarian perang adat.",
     desc_en: "One of the world's greatest linguistic sanctuaries. Home to the Asmat woodcarvers, colossal Tifa drum dances, and Maluku's historic Spice Islands.",
-    image: "https://images.unsplash.com/photo-1598751337485-0d51f7b7677d?auto=format&fit=crop&w=600&q=80"
+    image: "/assets/images/pulau/papua dan maluku.jfif"
   }
 };
 
@@ -192,8 +192,8 @@ export const ARTIFACTS_DATA: ArtifactData[] = [
     hotspots: [
       {
         id: "kris-h1",
-        x: 65,
-        y: 72,
+        x: 47,
+        y: 55,
         length: -18,
         title_id: "Ukiran Singo Barong",
         title_en: "Singo Barong Carving",
@@ -206,8 +206,8 @@ export const ARTIFACTS_DATA: ArtifactData[] = [
       },
       {
         id: "kris-h2",
-        x: 42,
-        y: 42,
+        x: 30,
+        y: 30,
         length: -20,
         title_id: "Bilah Luk 11",
         title_en: "11-Curve Blade",
@@ -220,8 +220,8 @@ export const ARTIFACTS_DATA: ArtifactData[] = [
       },
       {
         id: "kris-h3",
-        x: 22,
-        y: 14,
+        x: 15,
+        y: 4,
         title_id: "Pamor Bergola",
         title_en: "Bergola Pamor Pattern",
         desc_id: "Pola pamor bergola bergaya awan berputar pada bilah menunjukkan keahlian spiritual empu pembuatnya dalam memadukan material angkasa dan bumi.",
@@ -250,8 +250,9 @@ export const ARTIFACTS_DATA: ArtifactData[] = [
     hotspots: [
       {
         id: "rencong-h1",
-        x: 68,
-        y: 15,
+        x: 55,
+        y: 10,
+        length: 35,
         title_id: "Hulu Meucungkek",
         title_en: "Curved Hilt",
         desc_id: "Gagang melengkung khas (Meucungkek) yang ergonomis, memudahkan genggaman erat dan melambangkan awal huruf kaligrafi.",
@@ -263,8 +264,9 @@ export const ARTIFACTS_DATA: ArtifactData[] = [
       },
       {
         id: "rencong-h2",
-        x: 38,
-        y: 58,
+        x: 20,
+        y: 75,
+        length: 20,
         title_id: "Bilah Bismillah",
         title_en: "Calligraphic Blade",
         desc_id: "Bilah tajam dengan lengkungan yang dirancang menyerupai huruf Arab, merepresentasikan nilai spiritual Islam yang mendalam.",
@@ -276,8 +278,9 @@ export const ARTIFACTS_DATA: ArtifactData[] = [
       },
       {
         id: "rencong-h3",
-        x: 58,
-        y: 40,
+        x: 50,
+        y: 30,
+        length: 30,
         title_id: "Ganja Rencong",
         title_en: "Blade Guard (Ganja)",
         desc_id: "Bagian penyangga logam tebal antara gagang dan bilah, berfungsi menahan benturan dan menjaga keseimbangan genggaman.",
@@ -332,8 +335,9 @@ export const ARTIFACTS_DATA: ArtifactData[] = [
       },
       {
         id: "mandau-h3",
-        x: 70,
+        x: 45,
         y: 52,
+        length: 20,
         title_id: "Sarung (Kumpang) Mandau",
         title_en: "Mandau Scabbard",
         desc_id: "Sarung kayu mandau yang dihias anyaman rotan dan manik-manik khas Dayak, berfungsi melindungi bilah sekaligus sebagai penanda status sosial pemiliknya.",
@@ -1603,7 +1607,7 @@ export const ERAS_DATA: EraData[] = [
     title_en: "Prehistoric Era",
     desc_id: "Peradaban awal ditandai dengan lukisan dinding goa di Maros (Sulawesi) serta perkakas batu prasejarah melambangkan hubungan harmonis manusia pertama dengan alam.",
     desc_en: "Early civilization marked by cave wall paintings in Maros (Sulawesi) and stone tools symbolizing early man's harmony with nature.",
-    image: "https://images.unsplash.com/photo-1504470695779-75300268aa0e?auto=format&fit=crop&w=800&q=80",
+    image: "/assets/images/zaman/prasejarah.jfif",
     color: "#040406",
     events: [
       { year: "40,000 SM", text_id: "Lukisan goa tangan tertua ditemukan di tebing Maros, Sulawesi.", text_en: "Oldest cave stencil paintings discovered in Maros, Sulawesi." },
@@ -1618,7 +1622,7 @@ export const ERAS_DATA: EraData[] = [
     title_en: "Classical Hindu-Buddhist Era",
     desc_id: "Masuknya pengaruh aksara Pallawa dari India melahirkan tulisan pertama prasasti Yupa, serta pembangunan mahakarya dunia seperti candi Borobudur dan Prambanan.",
     desc_en: "The arrival of Pallava script from India births the first Yupa inscriptions, alongside masterworks Borobudur and Prambanan.",
-    image: "https://images.unsplash.com/photo-1584810359583-96fc3448beaa?auto=format&fit=crop&w=800&q=80",
+    image: "/assets/images/zaman/klasik.jfif",
     color: "#081C15",
     events: [
       { year: "400 M", text_id: "Prasasti Yupa Kutai menandai catatan sejarah tulisan tertua nusantara.", text_en: "Kutai Yupa Inscription marks the oldest written record in Indonesia." },
@@ -1633,7 +1637,7 @@ export const ERAS_DATA: EraData[] = [
     title_en: "Maritime Empires Golden Age",
     desc_id: "Sriwijaya menguasai perdagangan emas dan rempah Selat Malaka, disusul kebangkitan Majapahit yang menyatukan wilayah nusantara di bawah Sumpah Palapa Patih Gajah Mada.",
     desc_en: "Sriwijaya controls the Malacca gold and spice trade, followed by Majapahit uniting the archipelago under Prime Minister Gajah Mada's Palapa Oath.",
-    image: "https://images.unsplash.com/photo-1542856391-010fb87dcfed?auto=format&fit=crop&w=800&q=80",
+    image: "/assets/images/zaman/maritim.jpg",
     color: "#05192C",
     events: [
       { year: "683 M", text_id: "Kerajaan Sriwijaya menjadi pusat studi agama Buddha terbesar di Asia Tenggara.", text_en: "Sriwijaya Kingdom becomes the largest Buddhist studies hub in Southeast Asia." },
@@ -1648,7 +1652,7 @@ export const ERAS_DATA: EraData[] = [
     title_en: "Colonial & Resistance Era",
     desc_id: "Masuknya armada Eropa demi monopoli rempah memicu perlawanan sengit di berbagai daerah, melahirkan pahlawan nasional, serta pembentukan identitas nasional baru.",
     desc_en: "European fleets arriving for spice monopoly trigger fierce local resistance, forging national heroes and new shared identities.",
-    image: "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=800&q=80",
+    image: "/assets/images/zaman/kolonial.jfif",
     color: "#230A0A",
     events: [
       { year: "1602 M", text_id: "Kongsi dagang VOC didirikan, memulai monopoli rempah di Maluku.", text_en: "VOC trading charter established, starting spice monopolies in Maluku." },
@@ -1663,7 +1667,7 @@ export const ERAS_DATA: EraData[] = [
     title_en: "Independence & Nation Building",
     desc_id: "Proklamasi kemerdekaan 17 Agustus 1945 memulai babak baru konsolidasi negara kepulauan berdaulat, merumuskan ideologi Pancasila, dan integrasi bahasa persatuan Indonesia.",
     desc_en: "Independence Proclamation on August 17, 1945 starts sovereign nation building, drafting Pancasila, and integrating Indonesian as the national tongue.",
-    image: "https://images.unsplash.com/photo-1590073844006-33379778ae09?auto=format&fit=crop&w=800&q=80",
+    image: "/assets/images/zaman/kemerdekaan.jfif",
     color: "#1A0F03",
     events: [
       { year: "1945 M", text_id: "Proklamasi Kemerdekaan RI dibacakan oleh Soekarno-Hatta di Jakarta.", text_en: "Indonesian Independence Proclamation read by Soekarno-Hatta in Jakarta." },
@@ -1678,7 +1682,7 @@ export const ERAS_DATA: EraData[] = [
     title_en: "Reform & Digital Awakening Era",
     desc_id: "Indonesia memasuki era keterbukaan informasi, demokratisasi seni, serta integrasi teknologi digital untuk melestarikan warisan leluhur secara mandiri.",
     desc_en: "Indonesia enters open democracy, art democratization, and digital integration to preserve ancestral heritages autonomously.",
-    image: "https://images.unsplash.com/photo-1598751337485-0d51f7b7677d?auto=format&fit=crop&w=800&q=80",
+    image: "/assets/images/zaman/modern.jpg",
     color: "#07111F",
     events: [
       { year: "2009 M", text_id: "UNESCO menetapkan Batik Indonesia sebagai Warisan Kemanusiaan Takbenda.", text_en: "UNESCO designates Indonesian Batik as Masterpiece of Oral and Intangible Heritage." },
