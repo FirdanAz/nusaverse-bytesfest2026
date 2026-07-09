@@ -3,7 +3,7 @@
 import React from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Globe } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, easeOut } from "framer-motion";
 
 export default function SDGsImpact() {
   const { currentLang, t } = useLanguage();
@@ -78,7 +78,10 @@ export default function SDGsImpact() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
+      transition: {
+        duration: 0.5,
+        ease: easeOut,
+      },
     },
   };
 
