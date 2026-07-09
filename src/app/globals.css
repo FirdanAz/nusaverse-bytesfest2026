@@ -974,6 +974,7 @@
       filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.3));
     }
 
+    .map-panel-svg .selected path,
     .map-panel-svg path.selected {
       fill: rgba(212, 175, 55, 0.3);
       stroke: var(--gold-primary);

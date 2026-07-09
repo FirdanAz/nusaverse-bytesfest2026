@@ -85,7 +85,7 @@ export default function SDGsImpact() {
   return (
     <section id="sdgs" className="sdg-section section-padding">
       <div className="container">
-        
+
         {/* ── Section Header ── */}
         <motion.div
           className="text-center"
@@ -99,12 +99,12 @@ export default function SDGsImpact() {
             <Globe size={12} />
             <span>{t("sdg-eyebrow")}</span>
           </div>
-          
+
           <h2 className="section-title">
             {t("sdg-title-1")}{" "}
             <span className="text-gradient-gold">{t("sdg-title-2")}</span>
           </h2>
-          
+
           <p className="section-subtitle" style={{ maxWidth: "600px", margin: "16px auto 0 auto" }}>
             {t("sdg-subtitle")}
           </p>
@@ -130,9 +130,9 @@ export default function SDGsImpact() {
                 </span>
                 <h4>{item.feature}</h4>
               </div>
-              
+
               <div className="connector-arrow">↓</div>
-              
+
               <div className="sdg-part">
                 <span
                   className="sdg-mapping-badge-small"
@@ -166,11 +166,11 @@ export default function SDGsImpact() {
               >
                 SDG {card.id}
               </span>
-              
+
               <h4 className="sdg-compact-title">
                 {t(card.titleKey)}
               </h4>
-              
+
               <p className="sdg-compact-desc">
                 {t(card.descKey)}
               </p>

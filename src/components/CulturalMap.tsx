@@ -5,11 +5,24 @@ import { useLanguage } from "@/context/LanguageContext";
 import { ISLANDS_DATA } from "@/data/culturalData";
 import InteractiveMap from "./maps/InteractiveMap";
 import { Landmark, Languages, Info, MapPin } from "lucide-react";
+import { IslandData } from "@/types";
+
+const GENERAL_DATA: IslandData = {
+  title_id: "Indonesia",
+  title_en: "Indonesia",
+  meta_id: "Negara Kepulauan Nusantara",
+  meta_en: "Archipelagic Nation of Nusantara",
+  langs: "718 Bahasa Daerah",
+  unesco: "9+ Warisan Dunia",
+  desc_id: "Negara kepulauan terbesar di dunia yang terbentang dari Sabang sampai Merauke. Rumah bagi lebih dari 1.300 suku bangsa, 718 bahasa daerah, dan kekayaan tradisi luhur yang tiada tandingannya.",
+  desc_en: "The world's largest archipelagic nation, stretching from Sabang to Merauke. Home to over 1,300 ethnic groups, 718 local languages, and matchless ancestral traditions.",
+  image: "/assets/images/indonesia_overview.png"
+};
 
 export default function CulturalMap() {
   const { currentLang, t } = useLanguage();
   const [activeFilter, setActiveFilter] = useState<string>("all");
-  const [selectedIsland, setSelectedIsland] = useState<string>("sumatra");
+  const [selectedIsland, setSelectedIsland] = useState<string>("all");
   
   // Tooltip state
   const [tooltip, setTooltip] = useState<{ text: string; x: number; y: number; visible: boolean }>({
@@ -66,7 +79,9 @@ export default function CulturalMap() {
     setTooltip((prev) => ({ ...prev, visible: false }));
   };
 
-  const islandInfo = ISLANDS_DATA[selectedIsland] || ISLANDS_DATA["sumatra"];
+  const islandInfo = selectedIsland === "all" || !selectedIsland
+    ? GENERAL_DATA
+    : (ISLANDS_DATA[selectedIsland] || ISLANDS_DATA["sumatra"]);
 
   return (
     <section id="explore" className="map-section section-padding reveal">
@@ -91,7 +106,10 @@ export default function CulturalMap() {
           {filterChips.map((chip) => (
             <button
               key={chip.id}
-              onClick={() => setActiveFilter(chip.id)}
+              onClick={() => {
+                setActiveFilter(chip.id);
+                setSelectedIsland(chip.id);
+              }}
               className={`filter-chip ${activeFilter === chip.id ? "active" : ""}`}
             >
               {chip.label}
@@ -113,7 +131,10 @@ export default function CulturalMap() {
             <div className="w-full h-full">
               <InteractiveMap
                 selectedIsland={selectedIsland}
-                onSelectIsland={(islandId) => setSelectedIsland(islandId)}
+                onSelectIsland={(islandId) => {
+                  setSelectedIsland(islandId);
+                  setActiveFilter(islandId);
+                }}
               />
             </div>
 
@@ -138,7 +159,6 @@ export default function CulturalMap() {
                 activeFilter !== "all"
                   ? `#indonesia-svg-map .map-island-group:not([data-island="${activeFilter}"]) {
                       opacity: 0.15 !important;
-                      pointer-events: none !important;
                     }`
                   : ""
               }
