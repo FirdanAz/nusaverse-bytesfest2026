@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { ARTIFACTS_DATA } from "@/data/culturalData";
 import { ArtifactData, ArtifactCategory } from "@/types";
@@ -17,6 +17,8 @@ export default function VirtualMuseum() {
   const [activeCategory,   setActiveCategory]   = useState<string>("all");
   const [selectedId,       setSelectedId]       = useState<string>(ARTIFACTS_DATA[0].id);
   const [activeHotspotId,  setActiveHotspotId]  = useState<string | null>(null);
+
+  const viewerRef = useRef<HTMLDivElement>(null);
 
   /* Derived: filtered list */
   const filtered: ArtifactData[] =
@@ -44,6 +46,10 @@ export default function VirtualMuseum() {
 
   const handleSelect = useCallback((id: string) => {
     setSelectedId(id);
+    // Scroll to viewer area smoothly after state update
+    requestAnimationFrame(() => {
+      viewerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
   }, []);
 
   const handleHotspotToggle = useCallback((id: string) => {
@@ -82,7 +88,7 @@ export default function VirtualMuseum() {
         <div className="museum-cards-container">
 
           {/* 1. Viewer Area (grid-area: viewer) */}
-          <div className="viewer-area glass-card" style={{ padding: 0 }}>
+          <div className="viewer-area glass-card" ref={viewerRef} style={{ padding: 0 }}>
             <ArtifactViewer
               artifact={activeArtifact}
               activeHotspotId={activeHotspotId}

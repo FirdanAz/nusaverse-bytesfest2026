@@ -1,18 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { LANGUAGES_DATA } from "@/data/culturalData";
-import { Volume2, Play, Pause, Bookmark } from "lucide-react";
+import { Volume2 } from "lucide-react";
 
 export default function LanguagePreservation() {
   const { currentLang, t } = useLanguage();
   const [selectedLangId, setSelectedLangId] = useState<string>("jawa");
-  const [isPlaying, setIsPlaying] = useState(false);
   
-  // Custom audio bars height state
-  const [barHeights, setBarHeights] = useState<number[]>(new Array(24).fill(4));
-
   const langList = [
     { id: "jawa", name: "Bahasa Jawa", region: currentLang === "id" ? "Jawa Tengah & Jawa Timur" : "Central & East Java", status: "vulnerable" },
     { id: "sunda", name: "Bahasa Sunda", region: currentLang === "id" ? "Jawa Barat & Banten" : "West Java & Banten", status: "vulnerable" },
@@ -20,30 +16,6 @@ export default function LanguagePreservation() {
     { id: "bugis", name: "Bahasa Bugis", region: currentLang === "id" ? "Sulawesi Selatan" : "South Sulawesi", status: "endangered" },
     { id: "asmat", name: "Bahasa Asmat", region: currentLang === "id" ? "Papua Selatan" : "South Papua", status: "critical" },
   ];
-
-  // Audio equalizer simulation
-  useEffect(() => {
-    let timerId: NodeJS.Timeout | null = null;
-    
-    if (isPlaying) {
-      timerId = setInterval(() => {
-        setBarHeights(
-          new Array(24).fill(0).map(() => Math.random() * 26 + 4)
-        );
-      }, 120);
-    } else {
-      setBarHeights(new Array(24).fill(4));
-    }
-
-    return () => {
-      if (timerId) clearInterval(timerId);
-    };
-  }, [isPlaying]);
-
-  // Reset audio player when language changes
-  useEffect(() => {
-    setIsPlaying(false);
-  }, [selectedLangId]);
 
   const activeLanguage = LANGUAGES_DATA[selectedLangId] || LANGUAGES_DATA["jawa"];
 
@@ -131,34 +103,7 @@ export default function LanguagePreservation() {
               </div>
             </div>
 
-            {/* Simulated Audio Player */}
-            <div className="audio-player-custom">
-              <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="audio-play-btn"
-                aria-label={isPlaying ? "Jeda contoh suara" : "Putar contoh suara"}
-              >
-                {isPlaying ? (
-                  <Pause size={16} fill="currentColor" />
-                ) : (
-                  <Play size={16} fill="currentColor" className="ml-0.5" />
-                )}
-              </button>
-              
-              {/* Equalizer Audio Wave Bars */}
-              <div className="audio-wave-container">
-                {barHeights.map((height, i) => (
-                  <div
-                    key={i}
-                    className="audio-wave-bar"
-                    style={{
-                      height: `${height}px`,
-                      backgroundColor: isPlaying ? "var(--cyan-primary)" : "",
-                    }}
-                  ></div>
-                ))}
-              </div>
-            </div>
+
 
             {/* Interactive Alphabet Character Cards (Y-axis perspective flipping) */}
             <div>

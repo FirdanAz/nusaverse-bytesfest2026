@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { AlertTriangle, AlertOctagon, TrendingDown, BookOpen, Skull, Eye } from "lucide-react";
+import { AlertTriangle, AlertOctagon, TrendingDown, BookOpen, Skull, Users } from "lucide-react";
 
 export default function Crisis() {
   const { currentLang, t } = useLanguage();
@@ -12,16 +12,14 @@ export default function Crisis() {
 
   // Extinction countdown timer
   useEffect(() => {
-    // 8 days, 14 hours, 32 mins, 15 secs in seconds
     let totalSeconds = 8 * 24 * 3600 + 14 * 3600 + 32 * 60 + 15;
 
     const pad = (num: number) => String(num).padStart(2, "0");
 
     const updateTimer = () => {
       if (totalSeconds <= 0) {
-        totalSeconds = 14 * 24 * 3600; // Reset to 14 days
+        totalSeconds = 14 * 24 * 3600;
       }
-
       const d = Math.floor(totalSeconds / (24 * 3600));
       const h = Math.floor((totalSeconds % (24 * 3600)) / 3600);
       const m = Math.floor((totalSeconds % 3600) / 60);
@@ -33,7 +31,6 @@ export default function Crisis() {
 
     updateTimer();
     const intervalId = setInterval(updateTimer, 1000);
-
     return () => clearInterval(intervalId);
   }, []);
 
@@ -60,50 +57,32 @@ export default function Crisis() {
   return (
     <section id="crisis" className="crisis-section section-padding reveal">
       <div className="container">
-        
-        {/* Grid layout */}
+
+        {/* ── Top: 2-col text + chart grid ── */}
         <div className="crisis-grid">
-          
+
           {/* Left info column */}
           <div className="crisis-content">
             <div className="eyebrow-chip" style={{ borderColor: "#EF4444", color: "#EF4444", boxShadow: "0 0 15px rgba(239, 68, 68, 0.1)" }}>
               <AlertOctagon size={14} />
               <span>{t("crisis-eyebrow")}</span>
             </div>
-            
+
             <h2 className="section-title">
               {t("crisis-title-1")}
               <br />
               <span style={{ color: "#EF4444" }}>{t("crisis-title-2")}</span>
             </h2>
-            
+
             <p className="section-subtitle">
               {t("crisis-desc")}
             </p>
-
-            {/* Extinction countdown box */}
-            <div className="countdown-box">
-              <div className="flex items-center justify-center gap-2 text-[11px] tracking-widest font-bold text-red-500 uppercase mb-2">
-                <span className="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_12px_#EF4444] animate-pulse"></span>
-                <span>{currentLang === "id" ? "PENGHITUNG MUNDUR KEPUNAHAN" : "EXTINCTION COUNTDOWN"}</span>
-              </div>
-              <div className="countdown-timer">
-                {timeLeft}
-              </div>
-              <span className="text-xs text-white/50 block mt-2">
-                {currentLang === "id"
-                  ? "*Interval rata-rata hilangnya penutur aktif bahasa daerah"
-                  : "*Average interval of local native speaker loss"}
-              </span>
-            </div>
           </div>
 
           {/* Right chart column */}
           <div
             ref={chartRef}
-            className={`crisis-chart-container transition-all duration-500 ${
-              isAnimated ? "animated" : ""
-            }`}
+            className={`crisis-chart-container transition-all duration-500 ${isAnimated ? "animated" : ""}`}
           >
             <div className="crisis-chart-title">
               <TrendingDown className="text-red-500" />
@@ -134,33 +113,31 @@ export default function Crisis() {
                 <text x="40" y="192" className="text-[10px] fill-white/50 font-sans">1970</text>
                 <text x="150" y="192" className="text-[10px] fill-white/50 font-sans">2000</text>
                 <text x="260" y="192" className="text-[10px] fill-white/50 font-sans">2026</text>
-                <text x="350" y="192" className="text-[10px] fill-white/50 font-sans">2050 (Proj.)</text>
+                <text x="340" y="192" className="text-[10px] fill-white/50 font-sans">2050 (Proj.)</text>
 
                 {/* Area under chart */}
                 <path
                   d="M 40 170 L 40 20 L 150 40 L 260 70 L 370 130 L 370 170 Z"
-                  className={`fill-[url(#chart-gradient)] transition-opacity duration-1000 delay-[2000ms] ${
-                    isAnimated ? "opacity-12" : "opacity-0"
-                  }`}
+                  className={`fill-[url(#chart-gradient)] transition-opacity duration-1000 delay-[2000ms] ${isAnimated ? "opacity-12" : "opacity-0"}`}
                 />
 
                 {/* Active Line */}
                 <path
                   d="M 40 20 L 150 40 L 260 70"
-                  className={`fill-none stroke-cyan-primary stroke-[3.5] stroke-linecap-round transition-all duration-[2000ms] ease-in-out`}
-                  style={{
-                    strokeDasharray: 400,
-                    strokeDashoffset: isAnimated ? 0 : 400,
-                  }}
+                  className="fill-none stroke-cyan-primary stroke-[3.5] stroke-linecap-round transition-all duration-[2000ms] ease-in-out"
+                  style={{ strokeDasharray: 400, strokeDashoffset: isAnimated ? 0 : 400 }}
                 />
-                
+
                 {/* Extinct Proj Line */}
                 <path
                   d="M 260 70 L 370 130"
-                  className={`fill-none stroke-red-500 stroke-[3.5] stroke-dasharray-[6,4] transition-all duration-[2000ms] ease-in-out delay-1000`}
+                  fill="none"
+                  stroke="#EF4444"
+                  strokeWidth="3.5"
+                  strokeDasharray="6,4"
+                  strokeDashoffset={isAnimated ? 0 : 400}
                   style={{
-                    strokeDasharray: 400,
-                    strokeDashoffset: isAnimated ? 0 : 400,
+                    transition: "stroke-dashoffset 2s ease-in-out 1s",
                   }}
                 />
 
@@ -175,48 +152,111 @@ export default function Crisis() {
                 )}
               </svg>
             </div>
+
+            {/* Source note inside chart */}
+            <p style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", marginTop: "12px", lineHeight: "1.6" }}>
+              {t("chart-source-note")}
+            </p>
           </div>
         </div>
 
-        {/* Stats Grid cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="p-8 border border-red-500/8 hover:border-red-500/40 rounded-2xl bg-red-500/1 text-left relative transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_10px_30px_rgba(239,68,68,0.05)]">
-            <div className="w-11 h-11 bg-red-500/10 rounded-xl flex items-center justify-center text-red-500 mb-6">
-              <Skull size={20} />
+        {/* ── Stats 2×2 Grid ── */}
+        <div className="crisis-stats-grid">
+          {[
+            { icon: <Skull size={20} />, num: "8", label: t("crisis-card-1") },
+            { icon: <Users size={20} />, num: "67%", label: t("crisis-card-2") },
+            { icon: <BookOpen size={20} />, num: "5", label: t("crisis-card-3") },
+            { icon: <AlertTriangle size={20} />, num: "35%", label: t("crisis-card-4") },
+          ].map((card, i) => (
+            <div
+              key={i}
+              style={{
+                padding: "28px 24px",
+                borderRadius: "16px",
+                background: "rgba(15, 20, 35, 0.8)",
+                border: "1px solid rgba(239, 68, 68, 0.15)",
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(239,68,68,0.4)";
+                (e.currentTarget as HTMLDivElement).style.transform = "translateY(-4px)";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 10px 30px rgba(239,68,68,0.1)";
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(239,68,68,0.15)";
+                (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+              }}
+            >
+              <div style={{
+                width: "44px", height: "44px", borderRadius: "10px",
+                background: "rgba(239, 68, 68, 0.1)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "#EF4444", marginBottom: "20px",
+              }}>
+                {card.icon}
+              </div>
+              <div style={{
+                fontSize: "40px", fontWeight: 900, color: "var(--white)",
+                lineHeight: 1, marginBottom: "10px", fontFamily: "var(--font-display)",
+              }}>
+                {card.num}
+              </div>
+              <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.65)", lineHeight: "1.5" }}>
+                {card.label}
+              </div>
             </div>
-            <div className="text-display text-4xl font-black text-white leading-none mb-3">8</div>
-            <div className="text-sm text-white/70">{t("crisis-card-1")}</div>
+          ))}
+        </div>
+
+        {/* ── Full-width Extinction Ticker Banner ── */}
+        <div style={{
+          padding: "32px",
+          borderRadius: "20px",
+          background: "rgba(239, 68, 68, 0.03)",
+          border: "1px solid rgba(239, 68, 68, 0.2)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+          transition: "all 0.3s ease",
+        }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLDivElement).style.borderColor = "#EF4444";
+            (e.currentTarget as HTMLDivElement).style.boxShadow = "0 10px 30px rgba(239,68,68,0.15)";
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(239,68,68,0.2)";
+            (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+          }}
+        >
+          {/* Label */}
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "11px", letterSpacing: "0.15em", color: "#EF4444", fontWeight: 700, marginBottom: "8px" }}>
+            <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#EF4444", boxShadow: "0 0 12px #EF4444", animation: "pulse 1.5s infinite", display: "inline-block" }} />
+            {currentLang === "id" ? "REAL-TIME EXTINCTION TICKER" : "REAL-TIME EXTINCTION TICKER"}
           </div>
 
-          <div className="p-8 border border-red-500/8 hover:border-red-500/40 rounded-2xl bg-red-500/1 text-left relative transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_10px_30px_rgba(239,68,68,0.05)]">
-            <div className="w-11 h-11 bg-red-500/10 rounded-xl flex items-center justify-center text-red-500 mb-6">
-              <TrendingDown size={20} />
-            </div>
-            <div className="text-display text-4xl font-black text-white leading-none mb-3">85%</div>
-            <div className="text-sm text-white/70">{t("crisis-card-2")}</div>
+          {/* Timer */}
+          <div style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(28px, 4vw, 48px)",
+            fontWeight: 900,
+            color: "#EF4444",
+            textShadow: "0 0 15px rgba(239,68,68,0.4)",
+            letterSpacing: "0.05em",
+            margin: "8px 0",
+          }}>
+            {timeLeft}
           </div>
 
-          <div className="p-8 border border-red-500/8 hover:border-red-500/40 rounded-2xl bg-red-500/1 text-left relative transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_10px_30px_rgba(239,68,68,0.05)]">
-            <div className="w-11 h-11 bg-red-500/10 rounded-xl flex items-center justify-center text-red-500 mb-6">
-              <AlertTriangle size={20} />
-            </div>
-            <div className="text-display text-4xl font-black text-white leading-none mb-3">5</div>
-            <div className="text-sm text-white/70">{t("crisis-card-3")}</div>
-          </div>
-
-          <div className="p-8 border border-red-500/8 hover:border-red-500/40 rounded-2xl bg-red-500/1 text-left relative transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[0_10px_30px_rgba(239,68,68,0.05)]">
-            <div className="w-11 h-11 bg-red-500/10 rounded-xl flex items-center justify-center text-red-500 mb-6">
-              <BookOpen size={20} />
-            </div>
-            <div className="text-display text-4xl font-black text-white leading-none mb-3">60%</div>
-            <div className="text-sm text-white/70">{t("crisis-card-4")}</div>
+          {/* Subtitle */}
+          <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>
+            {currentLang === "id"
+              ? "Hingga bahasa daerah berikutnya diperkirakan punah total (Laju: 1 bahasa / 14 hari)"
+              : "Until the next regional language is estimated to go completely extinct (Rate: 1 language / 14 days)"}
           </div>
         </div>
 
-        {/* Data Reference Note */}
-        <div className="mt-8 text-[11px] text-white/40 max-w-[800px] mx-auto text-center leading-relaxed">
-          {t("chart-source-note")}
-        </div>
       </div>
     </section>
   );

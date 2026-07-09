@@ -16,6 +16,8 @@ export default function AIChat() {
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatBoxRef = useRef<HTMLDivElement>(null);
+  const chatMessagesBoxRef = useRef<HTMLDivElement>(null);
 
   // Load welcome message when language changes
   useEffect(() => {
@@ -27,9 +29,12 @@ export default function AIChat() {
     ]);
   }, [currentLang]);
 
-  // Scroll to bottom when messages or typing state changes
+  // Scroll messages container to bottom when new messages arrive
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const box = chatMessagesBoxRef.current;
+    if (box) {
+      box.scrollTop = box.scrollHeight;
+    }
   }, [messages, isTyping]);
 
   // Suggestion chips keys list
@@ -55,6 +60,11 @@ export default function AIChat() {
     setMessages(newMessages);
     setInputValue("");
     setIsTyping(true);
+
+    // Scroll chat box to center of viewport
+    requestAnimationFrame(() => {
+      chatBoxRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
 
     // AI response simulation
     setTimeout(() => {
@@ -131,7 +141,7 @@ export default function AIChat() {
           </div>
 
           {/* Right Column: AI Chat Simulator Box */}
-          <div className="ai-chat-interface glass-card">
+          <div className="ai-chat-interface glass-card" ref={chatBoxRef}>
             
             {/* Simulator Header */}
             <div className="ai-chat-header">
@@ -153,7 +163,7 @@ export default function AIChat() {
             </div>
 
             {/* Messages box list wrapper */}
-            <div className="ai-chat-messages-box" id="chat-messages-box">
+            <div className="ai-chat-messages-box" id="chat-messages-box" ref={chatMessagesBoxRef}>
               {messages.map((msg, i) => (
                 <div
                   key={i}

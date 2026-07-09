@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { ArtifactData, ArtifactCategory } from "@/types";
 import {
-  Search, ArrowUpDown, ChevronDown, ChevronUp,
+  ArrowUpDown, ChevronDown, ChevronUp,
   LayoutGrid, Sword, Leaf, Layers, Music, Building2, MapPin
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -54,7 +54,6 @@ export default function ArtifactList({
   onCategoryChange,
   t,
 }: ArtifactListProps) {
-  const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("default");
   const [selectedProvince, setSelectedProvince] = useState("all");
   const [expandedCategories, setExpandedCategories] = useState<Record<ArtifactCategory, boolean>>({
@@ -111,23 +110,9 @@ export default function ArtifactList({
         if (origin !== selectedProvince) return false;
       }
 
-      // Filter by search query
-      const query = searchQuery.trim().toLowerCase();
-      if (!query) return true;
-
-      const title = (lang === "id" ? item.title_id : item.title_en).toLowerCase();
-      const origin = (lang === "id" ? item.origin_id : item.origin_en).toLowerCase();
-      const material = (lang === "id" ? item.material_id : item.material_en).toLowerCase();
-      const era = (lang === "id" ? item.era_id : item.era_en).toLowerCase();
-      
-      return (
-        title.includes(query) ||
-        origin.includes(query) ||
-        material.includes(query) ||
-        era.includes(query)
-      );
+      return true;
     });
-  }, [artifacts, activeCategory, selectedProvince, searchQuery, lang]);
+  }, [artifacts, activeCategory, selectedProvince, lang]);
 
   // 2. Sort results
   const sortedAndFiltered = useMemo(() => {
@@ -212,49 +197,15 @@ export default function ArtifactList({
         ))}
       </div>
 
-      {/* ── COMPACT SEARCH & FILTER TOOLBAR (Height 44px) ────────────── */}
+      {/* ── SORT TOOLBAR ────────────────────────────────────────────── */}
       <div 
         style={{ 
           display: "flex",
           gap: "8px",
-          height: "44px",
+          height: "36px",
           width: "100%",
         }}
       >
-        {/* Search Field */}
-        <div style={{ position: "relative", flex: "3.2 1 0%" }}>
-          <Search 
-            size={13} 
-            style={{ 
-              position: "absolute", 
-              left: "12px", 
-              top: "50%", 
-              transform: "translateY(-50%)", 
-              color: "rgba(255,255,255,0.4)" 
-            }} 
-          />
-          <input
-            type="text"
-            placeholder={lang === "id" ? "Cari nama, asal daerah, bahan..." : "Search name, origin, material..."}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            style={{
-              width: "100%",
-              height: "100%",
-              padding: "0 10px 0 32px",
-              fontSize: "12px",
-              background: "rgba(3, 8, 16, 0.6)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: "8px",
-              color: "var(--white)",
-              outline: "none",
-              transition: "border-color 0.2s"
-            }}
-            onFocus={(e) => (e.target.style.borderColor = "var(--gold-primary)")}
-            onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.08)")}
-          />
-        </div>
-
         {/* Sort Dropdown */}
         <select
           value={sortBy}
@@ -345,11 +296,6 @@ export default function ArtifactList({
 
           // If filtering on activeCategory chip and it doesn't match, hide group
           if (activeCategory !== "all" && activeCategory !== cat.id) {
-            return null;
-          }
-
-          // If search active and no items match in this category, hide group
-          if (searchQuery.trim() && catItems.length === 0) {
             return null;
           }
 
