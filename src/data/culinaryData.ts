@@ -159,7 +159,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       title_en: "National Intangible Cultural Heritage of Indonesia (2016)"
     },
     flavorProfile: {
-      spiciness: 1,
+      spiciness: 0,
       sweetness: 3,
       savory: 2,
       richness: 3,
@@ -318,7 +318,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       title_en: "Intangible Cultural Heritage of Central Java"
     },
     flavorProfile: {
-      spiciness: 1,
+      spiciness: 0,
       sweetness: 3,
       savory: 2,
       richness: 2,
@@ -396,7 +396,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       title_en: "Classic Culinary Heritage Asset of North Sumatra"
     },
     flavorProfile: {
-      spiciness: 1,
+      spiciness: 0,
       sweetness: 3,
       savory: 2,
       richness: 3,
@@ -474,7 +474,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       title_en: "Indo-European Fusion Culinary Heritage Asset"
     },
     flavorProfile: {
-      spiciness: 1,
+      spiciness: 0,
       sweetness: 3,
       savory: 3,
       richness: 3,
@@ -634,7 +634,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       title_en: "National Intangible Cultural Heritage of Indonesia (2014)"
     },
     flavorProfile: {
-      spiciness: 1,
+      spiciness: 0,
       sweetness: 3,
       savory: 3,
       richness: 2,
@@ -793,7 +793,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       title_en: "Intangible Cultural Asset of West Java"
     },
     flavorProfile: {
-      spiciness: 1,
+      spiciness: 0,
       sweetness: 3,
       savory: 2,
       richness: 2,
@@ -872,7 +872,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       title_en: "Premier Culinary Asset of South Sulawesi"
     },
     flavorProfile: {
-      spiciness: 1,
+      spiciness: 0,
       sweetness: 3,
       savory: 2,
       richness: 2,

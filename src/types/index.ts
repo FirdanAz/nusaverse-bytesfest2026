@@ -116,7 +116,7 @@ export interface CulturalMeaning {
 }
 
 export interface CulinaryFlavorProfile {
-  spiciness: number; // 1 = Low, 2 = Medium, 3 = High
+  spiciness: number; // 0 = None, 1 = Low, 2 = Medium, 3 = High
   sweetness: number;
   savory: number;
   richness: number;

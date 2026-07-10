@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import { CulinaryData } from "@/types";
-import { MapPin, Tag, Utensils, Users, Award, ChevronDown } from "lucide-react";
+import { MapPin, Tag, Utensils, Users, Award } from "lucide-react";
 import FlavorProfile from "./FlavorProfile";
 import PreparationTimeline from "./PreparationTimeline";
 import ProvinceMap from "./ProvinceMap";
@@ -15,7 +15,7 @@ interface CulinaryDetailProps {
 
 export default function CulinaryDetail({ item }: CulinaryDetailProps) {
   const { currentLang } = useLanguage();
-  const [expandedSection, setExpandedSection] = useState<string | null>("overview");
+  const [activeTab, setActiveTab] = useState<string>("overview");
   const [imgError, setImgError] = useState(false);
   const [imgLoading, setImgLoading] = useState(true);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -52,9 +52,12 @@ export default function CulinaryDetail({ item }: CulinaryDetailProps) {
     });
   }, [item.id]);
 
-  const toggleSection = (section: string) => {
-    setExpandedSection(expandedSection === section ? null : section);
-  };
+  const tabs = [
+    { id: "overview", labelId: "Ikhtisar & Sejarah", labelEn: "Overview & History" },
+    { id: "process", labelId: "Bahan & Proses", labelEn: "Ingredients & Process" },
+    { id: "culture", labelId: "Filosofi & Adat", labelEn: "Philosophy & Culture" },
+    { id: "variations", labelId: "Varian & Fakta", labelEn: "Variants & Facts" }
+  ];
 
   // Category translation helper
   const getCategoryLabel = (category: string) => {
@@ -383,136 +386,110 @@ export default function CulinaryDetail({ item }: CulinaryDetailProps) {
         </p>
       </div>
 
-      {/* ─── ACCORDION ARCHIVE SECTIONS ─── */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "48px" }}>
-        
-        {/* SECTION 1: OVERVIEW & PROFILE (Default Expanded) */}
-        <div className="glass-card" style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.05)" }}>
-          <button
-            onClick={() => toggleSection("overview")}
-            style={{ width: "100%", padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(255,255,255,0.01)", border: "none", cursor: "pointer", outline: "none" }}
+      {/* ─── TABS NAV ─── */}
+      <div 
+        style={{
+          display: "flex",
+          gap: "4px",
+          padding: "4px",
+          background: "rgba(255, 255, 255, 0.02)",
+          borderRadius: "12px",
+          border: "1px solid rgba(255, 255, 255, 0.05)",
+          marginBottom: "24px",
+          overflowX: "auto",
+          scrollbarWidth: "none",
+        }}
+        className="no-scrollbar"
+      >
+        <style dangerouslySetInnerHTML={{__html: `
+          .no-scrollbar::-webkit-scrollbar {
+            display: none;
+          }
+        `}} />
+        {tabs.map((tab) => {
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                flex: "1 0 auto",
+                padding: "10px 16px",
+                borderRadius: "8px",
+                border: "none",
+                background: isActive ? "rgba(255, 255, 255, 0.08)" : "transparent",
+                color: isActive ? "var(--cyan-primary)" : "rgba(255, 255, 255, 0.6)",
+                fontWeight: 600,
+                fontSize: "13px",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+                whiteSpace: "nowrap",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px"
+              }}
+            >
+              {currentLang === "id" ? tab.labelId : tab.labelEn}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* ─── TAB CONTENT PANELS ─── */}
+      <div style={{ minHeight: "260px", marginBottom: "48px" }}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
           >
-            <span style={{ fontSize: "14.5px", fontWeight: 700, letterSpacing: "0.03em", textTransform: "uppercase", color: expandedSection === "overview" ? "var(--cyan-primary)" : "var(--white)" }}>
-              {currentLang === "id" ? "I. Gambaran & Profil Rasa" : "I. Overview & Flavor Profile"}
-            </span>
-            <ChevronDown size={16} style={{ color: "rgba(255,255,255,0.4)", transform: expandedSection === "overview" ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.25s ease" }} />
-          </button>
-          
-          <AnimatePresence initial={false}>
-            {expandedSection === "overview" && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
-              >
-                <div style={{ padding: "0 20px 24px 20px", borderTop: "1px solid rgba(255,255,255,0.03)", paddingTop: "20px" }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "24px" }}>
-                    
-                    {/* Flavor Profile */}
-                    <div>
-                      <h4 style={{ fontSize: "13px", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--white-50)", marginBottom: "16px" }}>
-                        {currentLang === "id" ? "Karakteristik Profil Rasa" : "Flavor Profile Indicators"}
-                      </h4>
-                      <FlavorProfile profile={item.flavorProfile} />
-                    </div>
+            {/* TAB 1: OVERVIEW */}
+            {activeTab === "overview" && (
+              <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                {/* Profile & Map Grid */}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "24px" }}>
+                  {/* Flavor Profile */}
+                  <div>
+                    <h4 style={{ fontSize: "13px", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--white-50)", marginBottom: "16px" }}>
+                      {currentLang === "id" ? "Karakteristik Profil Rasa" : "Flavor Profile Indicators"}
+                    </h4>
+                    <FlavorProfile profile={item.flavorProfile} />
+                  </div>
 
-                    {/* Province Indicator Map */}
-                    <div>
-                      <h4 style={{ fontSize: "13px", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--white-50)", marginBottom: "16px" }}>
-                        {currentLang === "id" ? "Indikator Geografis Asal" : "Geographic Indicator Map"}
-                      </h4>
-                      <div style={{ height: "170px", borderRadius: "10px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.04)", padding: "10px", background: "rgba(3, 10, 20, 0.3)" }}>
-                        <ProvinceMap provinceId={item.province_id} />
-                      </div>
+                  {/* Province Indicator Map */}
+                  <div>
+                    <h4 style={{ fontSize: "13px", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", color: "var(--white-50)", marginBottom: "16px" }}>
+                      {currentLang === "id" ? "Indikator Geografis Asal" : "Geographic Indicator Map"}
+                    </h4>
+                    <div style={{ height: "170px", borderRadius: "10px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.04)", padding: "10px", background: "rgba(3, 10, 20, 0.3)" }}>
+                      <ProvinceMap provinceId={item.province_id} />
                     </div>
-
                   </div>
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
 
-        {/* SECTION 2: HISTORICAL BACKGROUND */}
-        <div className="glass-card" style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.05)" }}>
-          <button
-            onClick={() => toggleSection("history")}
-            style={{ width: "100%", padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(255,255,255,0.01)", border: "none", cursor: "pointer", outline: "none" }}
-          >
-            <span style={{ fontSize: "14.5px", fontWeight: 700, letterSpacing: "0.03em", textTransform: "uppercase", color: expandedSection === "history" ? "var(--cyan-primary)" : "var(--white)" }}>
-              {currentLang === "id" ? "II. Latar Belakang Sejarah" : "II. Historical Background"}
-            </span>
-            <ChevronDown size={16} style={{ color: "rgba(255,255,255,0.4)", transform: expandedSection === "history" ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.25s ease" }} />
-          </button>
-          
-          <AnimatePresence initial={false}>
-            {expandedSection === "history" && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
-              >
-                <div style={{ padding: "0 20px 24px 20px", borderTop: "1px solid rgba(255,255,255,0.03)", paddingTop: "20px" }}>
-                  <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.7)", lineHeight: "1.7" }}>
+                {/* History Text */}
+                <div className="glass-card" style={{ padding: "20px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.01)" }}>
+                  <h4 style={{ fontSize: "13.5px", fontWeight: 700, letterSpacing: "0.03em", textTransform: "uppercase", color: "var(--cyan-primary)", marginBottom: "12px" }}>
+                    {currentLang === "id" ? "Latar Belakang Sejarah" : "Historical Background"}
+                  </h4>
+                  <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.75)", lineHeight: "1.7", margin: 0 }}>
                     {currentLang === "id" ? item.history_id : item.history_en}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
-        </div>
 
-        {/* SECTION 3: TRADITIONAL PREPARATION TIMELINE */}
-        <div className="glass-card" style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.05)" }}>
-          <button
-            onClick={() => toggleSection("preparation")}
-            style={{ width: "100%", padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(255,255,255,0.01)", border: "none", cursor: "pointer", outline: "none" }}
-          >
-            <span style={{ fontSize: "14.5px", fontWeight: 700, letterSpacing: "0.03em", textTransform: "uppercase", color: expandedSection === "preparation" ? "var(--cyan-primary)" : "var(--white)" }}>
-              {currentLang === "id" ? "III. Alur Pembuatan Tradisional" : "III. Traditional Preparation Timeline"}
-            </span>
-            <ChevronDown size={16} style={{ color: "rgba(255,255,255,0.4)", transform: expandedSection === "preparation" ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.25s ease" }} />
-          </button>
-          
-          <AnimatePresence initial={false}>
-            {expandedSection === "preparation" && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
-              >
-                <div style={{ padding: "0 20px 24px 20px", borderTop: "1px solid rgba(255,255,255,0.03)", paddingTop: "20px" }}>
-                  <PreparationTimeline steps={item.preparation} />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* SECTION 4: INGREDIENTS BADGES */}
-        <div className="glass-card" style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.05)" }}>
-          <button
-            onClick={() => toggleSection("ingredients")}
-            style={{ width: "100%", padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(255,255,255,0.01)", border: "none", cursor: "pointer", outline: "none" }}
-          >
-            <span style={{ fontSize: "14.5px", fontWeight: 700, letterSpacing: "0.03em", textTransform: "uppercase", color: expandedSection === "ingredients" ? "var(--cyan-primary)" : "var(--white)" }}>
-              {currentLang === "id" ? "IV. Komposisi Bahan Tradisional" : "IV. Traditional Ingredients"}
-            </span>
-            <ChevronDown size={16} style={{ color: "rgba(255,255,255,0.4)", transform: expandedSection === "ingredients" ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.25s ease" }} />
-          </button>
-          
-          <AnimatePresence initial={false}>
-            {expandedSection === "ingredients" && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
-              >
-                <div style={{ padding: "0 20px 24px 20px", borderTop: "1px solid rgba(255,255,255,0.03)", paddingTop: "20px" }}>
+            {/* TAB 2: PROCESS & INGREDIENTS */}
+            {activeTab === "process" && (
+              <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+                {/* Ingredients Badges */}
+                <div className="glass-card" style={{ padding: "20px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.01)" }}>
+                  <h4 style={{ fontSize: "13.5px", fontWeight: 700, letterSpacing: "0.03em", textTransform: "uppercase", color: "var(--cyan-primary)", marginBottom: "16px" }}>
+                    {currentLang === "id" ? "Komposisi Bahan Tradisional" : "Traditional Ingredients"}
+                  </h4>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                     {item.ingredients.map((ing, idx) => (
                       <span
@@ -532,81 +509,56 @@ export default function CulinaryDetail({ item }: CulinaryDetailProps) {
                     ))}
                   </div>
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
 
-        {/* SECTION 5: CULTURAL SIGNIFICANCE */}
-        <div className="glass-card" style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.05)" }}>
-          <button
-            onClick={() => toggleSection("significance")}
-            style={{ width: "100%", padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(255,255,255,0.01)", border: "none", cursor: "pointer", outline: "none" }}
-          >
-            <span style={{ fontSize: "14.5px", fontWeight: 700, letterSpacing: "0.03em", textTransform: "uppercase", color: expandedSection === "significance" ? "var(--cyan-primary)" : "var(--white)" }}>
-              {currentLang === "id" ? "V. Filosofi & Makna Adat" : "V. Philosophical & Cultural Significance"}
-            </span>
-            <ChevronDown size={16} style={{ color: "rgba(255,255,255,0.4)", transform: expandedSection === "significance" ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.25s ease" }} />
-          </button>
-          
-          <AnimatePresence initial={false}>
-            {expandedSection === "significance" && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
-              >
-                <div style={{ padding: "0 20px 24px 20px", borderTop: "1px solid rgba(255,255,255,0.03)", paddingTop: "20px" }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px" }}>
-                    {item.culturalMeaning.map((meaning, idx) => (
-                      <div
-                        key={idx}
-                        className="glass-card"
-                        style={{
-                          padding: "16px",
-                          borderRadius: "10px",
-                          border: "1px solid rgba(255, 255, 255, 0.04)",
-                          backgroundColor: "rgba(255, 255, 255, 0.015)"
-                        }}
-                      >
-                        <h5 style={{ fontSize: "13.5px", fontWeight: 700, color: "var(--gold-light)", marginBottom: "8px" }}>
-                          {currentLang === "id" ? meaning.title_id : meaning.title_en}
-                        </h5>
-                        <p style={{ fontSize: "12px", color: "rgba(255, 255, 255, 0.6)", lineHeight: "1.6" }}>
-                          {currentLang === "id" ? meaning.desc_id : meaning.desc_en}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
+                {/* Preparation Timeline */}
+                <div className="glass-card" style={{ padding: "20px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.01)" }}>
+                  <h4 style={{ fontSize: "13.5px", fontWeight: 700, letterSpacing: "0.03em", textTransform: "uppercase", color: "var(--cyan-primary)", marginBottom: "20px" }}>
+                    {currentLang === "id" ? "Alur Pembuatan Tradisional" : "Traditional Preparation Timeline"}
+                  </h4>
+                  <PreparationTimeline steps={item.preparation} />
                 </div>
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
-        </div>
 
-        {/* SECTION 6: REGIONAL VARIATIONS */}
-        <div className="glass-card" style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.05)" }}>
-          <button
-            onClick={() => toggleSection("variations")}
-            style={{ width: "100%", padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(255,255,255,0.01)", border: "none", cursor: "pointer", outline: "none" }}
-          >
-            <span style={{ fontSize: "14.5px", fontWeight: 700, letterSpacing: "0.03em", textTransform: "uppercase", color: expandedSection === "variations" ? "var(--cyan-primary)" : "var(--white)" }}>
-              {currentLang === "id" ? "VI. Varian Tradisional Wilayah" : "VI. Regional Variations"}
-            </span>
-            <ChevronDown size={16} style={{ color: "rgba(255,255,255,0.4)", transform: expandedSection === "variations" ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.25s ease" }} />
-          </button>
-          
-          <AnimatePresence initial={false}>
-            {expandedSection === "variations" && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
-              >
-                <div style={{ padding: "0 20px 24px 20px", borderTop: "1px solid rgba(255,255,255,0.03)", paddingTop: "20px" }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "10px" }}>
+            {/* TAB 3: CULTURE & PHILOSOPHY */}
+            {activeTab === "culture" && (
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                <h4 style={{ fontSize: "13.5px", fontWeight: 700, letterSpacing: "0.03em", textTransform: "uppercase", color: "var(--cyan-primary)", marginBottom: "4px" }}>
+                  {currentLang === "id" ? "Filosofi & Makna Adat" : "Philosophical & Cultural Significance"}
+                </h4>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px" }}>
+                  {item.culturalMeaning.map((meaning, idx) => (
+                    <div
+                      key={idx}
+                      className="glass-card"
+                      style={{
+                        padding: "16px",
+                        borderRadius: "10px",
+                        border: "1px solid rgba(255, 255, 255, 0.04)",
+                        backgroundColor: "rgba(255, 255, 255, 0.015)"
+                      }}
+                    >
+                      <h5 style={{ fontSize: "13.5px", fontWeight: 700, color: "var(--gold-light)", marginBottom: "8px" }}>
+                        {currentLang === "id" ? meaning.title_id : meaning.title_en}
+                      </h5>
+                      <p style={{ fontSize: "12px", color: "rgba(255, 255, 255, 0.6)", lineHeight: "1.6", margin: 0 }}>
+                        {currentLang === "id" ? meaning.desc_id : meaning.desc_en}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* TAB 4: VARIATIONS & FACTS */}
+            {activeTab === "variations" && (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "24px" }}>
+                {/* Varian Wilayah */}
+                <div>
+                  <h4 style={{ fontSize: "13.5px", fontWeight: 700, letterSpacing: "0.03em", textTransform: "uppercase", color: "var(--cyan-primary)", marginBottom: "16px" }}>
+                    {currentLang === "id" ? "Varian Tradisional Wilayah" : "Regional Variations"}
+                  </h4>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "10px" }}>
                     {(currentLang === "id" ? extraInfo.variations_id : extraInfo.variations_en).map((variant, idx) => (
                       <div
                         key={idx}
@@ -624,32 +576,12 @@ export default function CulinaryDetail({ item }: CulinaryDetailProps) {
                     ))}
                   </div>
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
 
-        {/* SECTION 7: INTERESTING FACTS */}
-        <div className="glass-card" style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.05)" }}>
-          <button
-            onClick={() => toggleSection("facts")}
-            style={{ width: "100%", padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(255,255,255,0.01)", border: "none", cursor: "pointer", outline: "none" }}
-          >
-            <span style={{ fontSize: "14.5px", fontWeight: 700, letterSpacing: "0.03em", textTransform: "uppercase", color: expandedSection === "facts" ? "var(--cyan-primary)" : "var(--white)" }}>
-              {currentLang === "id" ? "VII. Fakta Etnografis Menarik" : "VII. Interesting Ethnographic Facts"}
-            </span>
-            <ChevronDown size={16} style={{ color: "rgba(255,255,255,0.4)", transform: expandedSection === "facts" ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.25s ease" }} />
-          </button>
-          
-          <AnimatePresence initial={false}>
-            {expandedSection === "facts" && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
-              >
-                <div style={{ padding: "0 20px 24px 20px", borderTop: "1px solid rgba(255,255,255,0.03)", paddingTop: "20px" }}>
+                {/* Fakta Menarik */}
+                <div>
+                  <h4 style={{ fontSize: "13.5px", fontWeight: 700, letterSpacing: "0.03em", textTransform: "uppercase", color: "var(--cyan-primary)", marginBottom: "16px" }}>
+                    {currentLang === "id" ? "Fakta Etnografis Menarik" : "Interesting Ethnographic Facts"}
+                  </h4>
                   <ul style={{ display: "flex", flexDirection: "column", gap: "12px", paddingLeft: "20px", margin: 0, fontSize: "13.5px", color: "rgba(255,255,255,0.7)", lineHeight: "1.6" }}>
                     {(currentLang === "id" ? extraInfo.facts_id : extraInfo.facts_en).map((fact, idx) => (
                       <li key={idx} style={{ listStyleType: "circle" }}>
@@ -658,11 +590,10 @@ export default function CulinaryDetail({ item }: CulinaryDetailProps) {
                     ))}
                   </ul>
                 </div>
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
-        </div>
-
+          </motion.div>
+        </AnimatePresence>
       </div>
 
     </div>

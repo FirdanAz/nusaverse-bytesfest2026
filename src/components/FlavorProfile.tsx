@@ -18,7 +18,7 @@ export default function FlavorProfile({ profile }: FlavorProfileProps) {
     { key: "savory", label_id: "Kegurihan", label_en: "Savory", value: profile.savory },
     { key: "richness", label_id: "Kekentalan (Rempah)", name_en: "Richness", label_en: "Richness", value: profile.richness },
     { key: "texture", label_id: "Tekstur", label_en: "Texture", value: profile.texture },
-  ];
+  ].filter(item => !(item.key === "spiciness" && item.value === 0));
 
   // Helper to translate values
   const getLevelLabel = (val: number, key: string) => {
