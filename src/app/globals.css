@@ -1133,6 +1133,7 @@
       border: 1px solid var(--glass-border);
       cursor: pointer;
       transition: all 0.3s ease;
+      text-align: left;
     }
 
     .lang-item-row:hover {
