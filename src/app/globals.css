@@ -3093,6 +3093,47 @@
       .footer-grid {
         grid-template-columns: 1fr 1fr;
       }
+
+      /* AI Chat Mobile Optimizations */
+      .ai-chat-interface {
+        padding: 16px;
+        height: 500px;
+      }
+      .ai-chat-header {
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+        gap: 12px;
+      }
+      .ai-avatar-box {
+        width: 40px;
+        height: 40px;
+      }
+      .ai-chat-name {
+        font-size: 14px;
+      }
+      .ai-chat-messages-box {
+        margin-bottom: 12px;
+        gap: 12px;
+      }
+      .msg-bubble {
+        padding: 10px 14px;
+        font-size: 12.5px;
+      }
+      .ai-chat-chips-row {
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        margin-bottom: 12px;
+        scrollbar-width: none;
+      }
+      .ai-chat-chips-row::-webkit-scrollbar {
+        display: none;
+      }
+      .chat-suggestion-chip {
+        white-space: nowrap;
+        flex-shrink: 0;
+        padding: 6px 12px;
+      }
     }
 
     @media (max-width: 575px) {
