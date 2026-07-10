@@ -69,7 +69,7 @@ export default function AIChat() {
     // AI response simulation
     setTimeout(() => {
       let aiResponseText = "";
-      
+
       if (presetKey && presetKey in AI_RESPONSES) {
         const responseData = AI_RESPONSES[presetKey];
         aiResponseText = currentLang === "id" ? responseData.id_ai : responseData.en_ai;
@@ -102,7 +102,7 @@ export default function AIChat() {
     <section id="ai-guide" className="ai-section section-padding reveal">
       <div className="container">
         <div className="ai-grid">
-          
+
           <div>
             <div className="eyebrow-chip eyebrow-chip-cyan">
               <Bot size={14} />
@@ -142,13 +142,13 @@ export default function AIChat() {
 
           {/* Right Column: AI Chat Simulator Box */}
           <div className="ai-chat-interface glass-card" ref={chatBoxRef}>
-            
+
             {/* Simulator Header */}
             <div className="ai-chat-header">
               <div className="ai-avatar-box">
                 <img
                   className="ai-avatar-img"
-                  src="https://images.unsplash.com/photo-1590073844006-33379778ae09?auto=format&fit=crop&w=150&q=80"
+                  src="/assets/images/icons/nusaverse-icon.svg"
                   alt="Nusa AI"
                   loading="lazy"
                 />
@@ -183,7 +183,7 @@ export default function AIChat() {
                   </div>
                 </div>
               )}
-              
+
               <div ref={messagesEndRef} />
             </div>
 
