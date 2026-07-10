@@ -11,15 +11,12 @@ import ProvinceMap from "./ProvinceMap";
 
 interface CulinaryDetailProps {
   item: CulinaryData;
-  allCulinary: CulinaryData[];
-  onSelectRelated: (id: string) => void;
 }
 
-export default function CulinaryDetail({ item, allCulinary, onSelectRelated }: CulinaryDetailProps) {
+export default function CulinaryDetail({ item }: CulinaryDetailProps) {
   const { currentLang } = useLanguage();
   const [expandedSection, setExpandedSection] = useState<string | null>("overview");
   const [imgError, setImgError] = useState(false);
-  const [relatedErrors, setRelatedErrors] = useState<Record<string, boolean>>({});
   const [imgLoading, setImgLoading] = useState(true);
   const imageRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -28,7 +25,6 @@ export default function CulinaryDetail({ item, allCulinary, onSelectRelated }: C
     // Reset state asynchronously to avoid react-hooks/set-state-in-effect warning
     setTimeout(() => {
       setImgError(false);
-      setRelatedErrors({});
     }, 0);
     
     if (imgRef.current) {
@@ -59,9 +55,6 @@ export default function CulinaryDetail({ item, allCulinary, onSelectRelated }: C
   const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);
   };
-
-  // Get related items objects
-  const relatedItems = allCulinary.filter((c) => item.relatedItems.includes(c.id));
 
   // Category translation helper
   const getCategoryLabel = (category: string) => {
@@ -670,91 +663,6 @@ export default function CulinaryDetail({ item, allCulinary, onSelectRelated }: C
           </AnimatePresence>
         </div>
 
-      </div>
-
-      {/* ─── RELATED CULINARY RECOMMENDATIONS ─── */}
-      <div style={{ borderTop: "1px solid rgba(255, 255, 255, 0.05)", paddingTop: "32px", marginBottom: "16px", textAlign: "left" }}>
-        <h4 style={{ fontSize: "16px", fontWeight: 800, color: "var(--white)", letterSpacing: "0.05em", textTransform: "uppercase", marginBottom: "16px", fontFamily: "var(--font-display)" }}>
-          {currentLang === "id" ? "Rekomendasi Kuliner Terkait" : "Related Culinary Heritage"}
-        </h4>
-        
-        {/* Horizontal scroll grid */}
-        <div
-          className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin"
-          style={{
-            display: "flex",
-            gap: "16px",
-            overflowX: "auto",
-            paddingBottom: "16px",
-            scrollSnapType: "x mandatory",
-            WebkitOverflowScrolling: "touch"
-          }}
-        >
-          {relatedItems.map((rel) => (
-            <button
-              key={rel.id}
-              onClick={() => onSelectRelated(rel.id)}
-              className="glass-card snap-start"
-              style={{
-                flex: "0 0 200px",
-                width: "200px",
-                padding: "12px",
-                borderRadius: "10px",
-                textAlign: "left",
-                backgroundColor: "rgba(255, 255, 255, 0.015)",
-                borderColor: "rgba(255, 255, 255, 0.04)",
-                cursor: "pointer",
-                transition: "transform 0.2s ease, border-color 0.2s ease",
-                outline: "none"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "var(--cyan-primary)";
-                e.currentTarget.style.transform = "translateY(-2px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.04)";
-                e.currentTarget.style.transform = "none";
-              }}
-            >
-              {/* Image */}
-              <div style={{ position: "relative", width: "100%", height: "100px", borderRadius: "6px", overflow: "hidden", marginBottom: "10px", backgroundColor: "rgba(255, 255, 255, 0.04)" }}>
-                {relatedErrors[rel.id] ? (
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      background: "linear-gradient(135deg, #1E293B 0%, #0F172A 100%)",
-                      color: "var(--gold-light)",
-                      fontSize: "12px",
-                      fontWeight: "bold"
-                    }}
-                  >
-                    {rel.title_id.charAt(0)}
-                  </div>
-                ) : (
-                  <img
-                    src={rel.gallery[0]}
-                    alt={currentLang === "id" ? rel.title_id : rel.title_en}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    loading="lazy"
-                    onError={() => setRelatedErrors((prev) => ({ ...prev, [rel.id]: true }))}
-                  />
-                )}
-              </div>
-
-              {/* Title & Province */}
-              <h5 style={{ fontSize: "13px", fontWeight: 700, color: "var(--white)", margin: "0 0 2px 0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                {currentLang === "id" ? rel.title_id : rel.title_en}
-              </h5>
-              <span style={{ fontSize: "11px", color: "rgba(255, 255, 255, 0.45)", display: "block" }}>
-                {currentLang === "id" ? rel.province_id : rel.province_en}
-              </span>
-            </button>
-          ))}
-        </div>
       </div>
 
     </div>

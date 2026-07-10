@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { Check, Heart, Info, ArrowUp } from "lucide-react";
+import { Check } from "lucide-react";
 
 export default function Footer() {
   const { currentLang, t } = useLanguage();
@@ -18,9 +18,7 @@ export default function Footer() {
     setEmail("");
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+
 
   return (
     <>
@@ -139,21 +137,7 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Column 3: Info */}
-            <div>
-              <h5 className="footer-col-title">
-                {t("foot-col-3")}
-              </h5>
-              <ul className="footer-links-list">
-                <li className="footer-link-item"><a href="#">{t("foot-item-9")}</a></li>
-                <li className="footer-link-item"><a href="/guidebook-creative-web.pdf" target="_blank" className="flex items-center gap-1"><Info size={11} /> Guidebook PDF</a></li>
-                <li className="footer-link-item">
-                  <button onClick={scrollToTop} className="bg-transparent border-none cursor-pointer" style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", display: "flex", alignItems: "center", gap: "4px" }}>
-                    <ArrowUp size={11} /> Back to Top
-                  </button>
-                </li>
-              </ul>
-            </div>
+
 
           </div>
 
@@ -175,7 +159,7 @@ export default function Footer() {
               </span>
               
               <span className="footer-heart-credit">
-                {t("foot-credit").replace("♥", "❤")}
+                {t("foot-credit")}
               </span>
             </div>
 

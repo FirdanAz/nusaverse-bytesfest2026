@@ -52,8 +52,6 @@ export default function CulinarySection() {
             <CulinaryDetail
               key={activeCulinary.id}
               item={activeCulinary}
-              allCulinary={CULINARY_DATA}
-              onSelectRelated={handleSelect}
             />
           </div>
 

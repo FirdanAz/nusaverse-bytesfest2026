@@ -85,7 +85,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 2
     },
     gallery: [
-      "https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/rendang.jfif"
     ],
     relatedItems: ["pempek", "sambal-roa"]
   },
@@ -166,7 +166,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 2
     },
     gallery: [
-      "https://images.unsplash.com/photo-1599043513900-eed6f0b56829?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/gudeg.jfif"
     ],
     relatedItems: ["klepon", "es-cendol"]
   },
@@ -245,7 +245,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 3
     },
     gallery: [
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/papeda.jfif"
     ],
     relatedItems: ["sambal-roa", "rendang"]
   },
@@ -325,7 +325,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 3
     },
     gallery: [
-      "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/klepon.jfif"
     ],
     relatedItems: ["es-cendol", "gudeg"]
   },
@@ -403,7 +403,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 3
     },
     gallery: [
-      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/bika ambon.jfif"
     ],
     relatedItems: ["lapis-legit", "es-cendol"]
   },
@@ -481,7 +481,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 3
     },
     gallery: [
-      "https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/lapis legit.jfif"
     ],
     relatedItems: ["bika-ambon", "klepon"]
   },
@@ -563,7 +563,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 3
     },
     gallery: [
-      "https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/pempek.jfif"
     ],
     relatedItems: ["rendang", "siomay-bandung"]
   },
@@ -641,7 +641,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 3
     },
     gallery: [
-      "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/lumpia.jfif"
     ],
     relatedItems: ["pempek", "siomay-bandung"]
   },
@@ -719,7 +719,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 3
     },
     gallery: [
-      "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/siomay.jfif"
     ],
     relatedItems: ["pempek", "lumpia-semarang"]
   },
@@ -800,7 +800,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 3
     },
     gallery: [
-      "https://images.unsplash.com/photo-1568254183919-78a4f43a2877?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/cendol.jfif"
     ],
     relatedItems: ["klepon", "es-pisang-ijo"]
   },
@@ -879,7 +879,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 3
     },
     gallery: [
-      "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/pisang ijo.jfif"
     ],
     relatedItems: ["es-cendol", "bir-pletok"]
   },
@@ -957,7 +957,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 1
     },
     gallery: [
-      "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/birpletok.jfif"
     ],
     relatedItems: ["es-pisang-ijo", "sambal-terasi"]
   },
@@ -1038,7 +1038,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 2
     },
     gallery: [
-      "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/sambal roa.jfif"
     ],
     relatedItems: ["rendang", "sambal-matah"]
   },
@@ -1116,7 +1116,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 2
     },
     gallery: [
-      "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/sambal terasi.jfif"
     ],
     relatedItems: ["sambal-roa", "bir-pletok"]
   },
@@ -1194,7 +1194,7 @@ export const CULINARY_DATA: CulinaryData[] = [
       texture: 3
     },
     gallery: [
-      "https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=800&q=80"
+      "/assets/images/culinarys/sambal matah.jfif"
     ],
     relatedItems: ["sambal-roa", "sambal-terasi"]
   }
