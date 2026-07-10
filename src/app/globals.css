@@ -2463,7 +2463,10 @@
     }
 
     .ai-chat-messages-box {
-      flex-grow: 1;
+      flex: 1 1 0%;
+      height: 0;
+      min-height: 0;
+      max-height: calc(100% - 140px);
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -2525,6 +2528,7 @@
       gap: 8px;
       margin-bottom: 16px;
       flex-wrap: wrap;
+      flex-shrink: 0;
     }
 
     .chat-suggestion-chip {
@@ -2549,6 +2553,7 @@
       display: flex;
       gap: 8px;
       position: relative;
+      flex-shrink: 0;
     }
 
     .ai-chat-input {
@@ -3118,6 +3123,7 @@
       .ai-chat-messages-box {
         margin-bottom: 12px;
         gap: 12px;
+        max-height: calc(100% - 120px);
       }
       .msg-bubble {
         padding: 10px 14px;
