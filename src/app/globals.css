@@ -359,6 +359,14 @@
       width: 100%;
     }
 
+    .nav-link.active {
+      color: var(--white);
+    }
+
+    .nav-link.active::after {
+      width: 100%;
+    }
+
     .nav-actions {
       display: flex;
       align-items: center;
@@ -2143,6 +2151,10 @@
       gap: 8px;
       cursor: pointer;
       position: relative;
+      padding: 12px 10px;
+      margin: -12px -10px;
+      outline: none;
+      transition: all 0.3s ease;
     }
 
     .timeline-node-dot {
@@ -2575,173 +2587,158 @@
     }
 
     /* ─── 08 · SDGs IMPACT SECTION ───────────────────────────────────── */
-    .sdg-section {
+    /* ─── 08 · CULINARY HERITAGE ARCHIVE SECTION ─────────────────────── */
+    .culinary-section {
       background: var(--navy-deepest);
       position: relative;
     }
 
-    /* Mapping Grid & Cards */
-    .sdg-mapping-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-      margin: 48px auto;
-      max-width: 1000px;
-    }
-
-    .sdg-mapping-card {
-      background: rgba(15, 20, 35, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 24px;
+    /* Split layout: detail takes 65%, navigation takes 35% on desktop */
+    .culinary-layout-flex {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      transition: all 0.3s ease;
+      flex-direction: row-reverse; /* Details on right, navigation on left */
+      gap: 28px;
+      align-items: stretch;
     }
 
-    .sdg-mapping-card:hover {
-      border-color: rgba(212, 175, 55, 0.25);
-      background: rgba(15, 20, 35, 0.6);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
-
-    .sdg-mapping-card .feature-part h4 {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 4px;
-    }
-
-    .sdg-mapping-card .feature-part p {
-      font-size: 12px;
-      color: var(--white-50);
-    }
-
-    .sdg-mapping-card .connector-arrow {
-      font-size: 16px;
-      color: var(--gold-primary);
-      margin: 12px 0;
-      opacity: 0.6;
-    }
-
-    .sdg-mapping-card .sdg-part {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .sdg-mapping-card .sdg-part h4 {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--white-80);
-    }
-
-    .sdg-mapping-badge-small {
-      font-size: 10px;
-      font-weight: 800;
-      color: var(--white);
-      padding: 3px 8px;
-      border-radius: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    /* Compact SDG Cards Grid */
-    .sdg-compact-cards-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      margin: 48px auto;
-      max-width: 1100px;
-    }
-
-    .sdg-compact-card {
-      background: rgba(15, 20, 35, 0.6);
+    .culinary-detail-panel {
+      flex: 1 1 65%;
+      min-width: 0;
+      padding: 32px;
+      background: rgba(15, 20, 35, 0.35);
       border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: 14px;
-      padding: 24px 20px;
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      box-shadow: var(--glass-glow);
+    }
+
+    .culinary-navigation-panel {
+      flex: 0 0 35%;
+      width: 35%;
+      max-height: 850px;
       display: flex;
       flex-direction: column;
+      padding: 24px;
+      background: rgba(15, 20, 35, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      box-shadow: var(--glass-glow);
+    }
+
+    /* Compact Card Hover & Transitions */
+    .culinary-compact-card {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .culinary-compact-card:hover {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+      border-color: rgba(255, 255, 255, 0.12) !important;
+      transform: translateY(-1.5px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .culinary-compact-card.active:hover {
+      background-color: rgba(34, 211, 238, 0.12) !important;
+      border-color: var(--cyan-primary) !important;
+    }
+
+    /* Traditional Preparation Timeline */
+    .culinary-timeline-container {
+      width: 100%;
+      overflow-x: auto;
+      padding: 10px 0;
+    }
+    .culinary-timeline-flex {
+      display: flex;
       align-items: flex-start;
+      gap: 16px;
+      min-width: max-content;
+    }
+    .timeline-node-card {
+      flex: 0 0 210px;
+      width: 210px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       text-align: left;
-      transition: all 0.3s ease;
-      height: 100%;
     }
-
-    .sdg-compact-card:hover {
-      background: rgba(15, 20, 35, 0.8);
-      transform: translateY(-4px);
-    }
-
-    .sdg-compact-badge {
-      font-size: 10px;
+    .timeline-node-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(253, 157, 36, 0.1);
+      border: 1.5px solid var(--gold-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
       font-weight: 800;
-      color: var(--white);
-      padding: 4px 8px;
-      border-radius: 6px;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      color: var(--gold-light);
+      box-shadow: 0 0 8px rgba(253, 157, 36, 0.25);
     }
-
-    .sdg-compact-title {
-      font-size: 15px;
+    .timeline-node-title {
+      font-size: 13px;
       font-weight: 700;
       color: var(--white);
-      margin-bottom: 12px;
+      margin: 0;
+    }
+    .timeline-node-desc {
+      font-size: 11.5px;
+      color: var(--white-50);
+      line-height: 1.55;
+      margin: 0;
+    }
+    .timeline-node-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 30px;
+      align-self: flex-start;
+      color: rgba(255, 255, 255, 0.15);
+      flex-shrink: 0;
+    }
+    .divider-arrow-svg {
+      width: 14px;
+      height: 14px;
     }
 
-    .sdg-compact-desc {
-      font-size: 12px;
-      color: var(--white-60);
-      line-height: 1.5;
+    /* Custom Webkit scrollbar rules for clean horizontal lists */
+    .scrollbar-thin::-webkit-scrollbar {
+      height: 4px;
+      width: 4px;
+    }
+    .scrollbar-thin::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 10px;
+    }
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+    .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.18);
     }
 
-    /* Closing Statement */
-    .sdg-premium-closing {
-      text-align: center;
-      margin-top: 64px;
-      padding-top: 32px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .sdg-closing-quote {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--white);
-      line-height: 1.4;
-      margin-bottom: 12px;
-    }
-
-    .sdg-closing-caption {
-      font-size: 11px;
-      color: var(--white-40);
-      letter-spacing: 0.03em;
-    }
-
+    /* Responsive Adaptation overrides */
     @media (max-width: 991px) {
-      .sdg-compact-cards-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .culinary-layout-flex {
+        flex-direction: column; /* stacked: Detail on top, Navigation below */
+        gap: 24px;
+      }
+      .culinary-detail-panel {
+        width: 100%;
+      }
+      .culinary-navigation-panel {
+        width: 100%;
+        max-height: none;
       }
     }
 
     @media (max-width: 767px) {
-      .sdg-mapping-grid {
-        grid-template-columns: 1fr;
+      .culinary-detail-panel {
+        padding: 20px;
       }
-      .sdg-compact-cards-grid {
-        grid-template-columns: 1fr;
-      }
-      .sdg-closing-quote {
-        font-size: 16px;
+      .culinary-navigation-panel {
+        padding: 16px;
       }
     }
 
@@ -3399,4 +3396,63 @@
         align-items: center;
         gap: 8px;
       }
-    }
+    }
+
+    /* ─── Shimmer Skeleton Animation ─── */
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    /* ─── Nusa AI Typing Animation ─── */
+    @keyframes typing-bounce {
+      0%, 100% {
+        transform: translateY(0);
+        opacity: 0.4;
+      }
+      50% {
+        transform: translateY(-4px);
+        opacity: 1;
+      }
+    }
+
+    .animate-typing-1 {
+      animation: typing-bounce 1s infinite 0s ease-in-out;
+    }
+    .animate-typing-2 {
+      animation: typing-bounce 1s infinite 0.15s ease-in-out;
+    }
+    .animate-typing-3 {
+      animation: typing-bounce 1s infinite 0.3s ease-in-out;
+    }
+
+    /* ─── Global Scrollbar Customization ─── */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.12) rgba(3, 10, 20, 0.4);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(3, 10, 20, 0.4);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background 0.25s ease;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(253, 157, 36, 0.5); /* gold accent on hover */
+    }
+

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { LANGUAGES_DATA } from "@/data/culturalData";
-import { Volume2 } from "lucide-react";
+import { Languages } from "lucide-react";
 
 export default function LanguagePreservation() {
   const { currentLang, t } = useLanguage();
@@ -38,7 +38,7 @@ export default function LanguagePreservation() {
         {/* Header */}
         <div className="text-center" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <div className="eyebrow-chip eyebrow-chip-cyan">
-            <Volume2 size={12} />
+            <Languages size={12} />
             <span>{t("lang-eyebrow")}</span>
           </div>
           <h2 className="section-title">

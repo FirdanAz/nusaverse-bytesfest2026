@@ -10,7 +10,7 @@ import LanguagePreservation from "@/components/LanguagePreservation";
 import VirtualMuseum from "@/components/VirtualMuseum";
 import Timeline from "@/components/Timeline";
 import AIChat from "@/components/AIChat";
-import SDGsImpact from "@/components/SDGsImpact";
+import CulinarySection from "@/components/CulinarySection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -96,11 +96,11 @@ export default function Home() {
         {/* 06. Historical Linimasa Timeline Section */}
         <Timeline />
 
-        {/* 07. Nusa AI Assistant Section */}
-        <AIChat />
+        {/* 07. Culinary Heritage Archive Section */}
+        <CulinarySection />
 
-        {/* 08. SDGs 4 pillars Impact Section */}
-        <SDGsImpact />
+        {/* 08. Nusa AI Assistant Section */}
+        <AIChat />
       </main>
 
       {/* CTA waitlist form & Footer links */}

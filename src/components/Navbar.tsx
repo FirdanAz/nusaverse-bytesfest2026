@@ -8,6 +8,7 @@ export default function Navbar() {
   const { currentLang, setLang, t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,8 +17,26 @@ export default function Navbar() {
       } else {
         setScrolled(false);
       }
+
+      // Scrollspy logic: find the section currently visible in the viewport
+      const sections = ["hero", "crisis", "explore", "language", "museum", "timeline", "culinary", "ai-guide"];
+      const scrollPosition = window.scrollY + 160; // offset for navbar height + buffer
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const id = sections[i];
+        const el = document.getElementById(id);
+        if (el) {
+          if (scrollPosition >= el.offsetTop) {
+            setActiveSection(id);
+            break;
+          }
+        }
+      }
     };
+
     window.addEventListener("scroll", handleScroll);
+    handleScroll(); // run once on mount
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -28,8 +47,8 @@ export default function Navbar() {
     { href: "#language", label: currentLang === "id" ? "Bahasa" : "Language" },
     { href: "#museum", label: "Museum" },
     { href: "#timeline", label: currentLang === "id" ? "Sejarah" : "History" },
+    { href: "#culinary", label: currentLang === "id" ? "Kuliner" : "Culinary" },
     { href: "#ai-guide", label: "Nusa AI" },
-    { href: "#sdgs", label: "SDGs" },
   ];
 
   return (
@@ -50,16 +69,19 @@ export default function Navbar() {
 
         {/* Navigation links drawer */}
         <div className={`nav-links ${mobileMenuOpen ? "mobile-open" : ""}`} id="mobile-nav-links">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="nav-link"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const isLinkActive = activeSection === link.href.slice(1);
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                className={`nav-link ${isLinkActive ? "active" : ""}`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.label}
+              </a>
+            );
+          })}
         </div>
 
         {/* Action button triggers */}

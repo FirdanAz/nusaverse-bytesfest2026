@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { ArtifactData, ArtifactCategory } from "@/types";
 import {
   ArrowUpDown, ChevronDown, ChevronUp,
-  LayoutGrid, Sword, Leaf, Layers, Music, Building2, MapPin
+  LayoutGrid, Sword, Leaf, Layers, Music, Building2, MapPin, Search, X
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import ArtifactCard from "./ArtifactCard";
@@ -56,6 +56,7 @@ export default function ArtifactList({
 }: ArtifactListProps) {
   const [sortBy, setSortBy] = useState("default");
   const [selectedProvince, setSelectedProvince] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [expandedCategories, setExpandedCategories] = useState<Record<ArtifactCategory, boolean>>({
     weapons: true,
     sacred: false,
@@ -110,9 +111,20 @@ export default function ArtifactList({
         if (origin !== selectedProvince) return false;
       }
 
+      // Filter by search query
+      if (searchQuery.trim() !== "") {
+        const q = searchQuery.toLowerCase();
+        const title = (lang === "id" ? item.title_id : item.title_en).toLowerCase();
+        const origin = (lang === "id" ? item.origin_id : item.origin_en).toLowerCase();
+        const desc = (lang === "id" ? item.desc_id : item.desc_en).toLowerCase();
+        if (!title.includes(q) && !origin.includes(q) && !desc.includes(q)) {
+          return false;
+        }
+      }
+
       return true;
     });
-  }, [artifacts, activeCategory, selectedProvince, lang]);
+  }, [artifacts, activeCategory, selectedProvince, searchQuery, lang]);
 
   // 2. Sort results
   const sortedAndFiltered = useMemo(() => {
@@ -164,70 +176,103 @@ export default function ArtifactList({
     <div className="museum-navigation-panel" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       
       {/* ── FILTER CHIPS ────────────────────────────────────────────── */}
-      <div
-        style={{
-          display: "flex",
-          gap: "8px",
-          flexWrap: "wrap",
-          paddingBottom: "8px",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.05)"
-        }}
-        role="group"
-        aria-label="Filter kategori"
-      >
-        {FILTER_CATEGORIES.map((cat) => (
-          <button
-            key={cat.id}
-            onClick={() => onCategoryChange(cat.id)}
-            className={`museum-cat-chip${activeCategory === cat.id ? " active" : ""}`}
-            style={{
-              padding: "6px 10px",
-              fontSize: "11px",
-              borderRadius: "20px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "4px",
-              transition: "all 0.2s"
-            }}
-          >
-            <span>{cat.icon}</span>
-            {t(cat.key) || cat.fallback[lang]}
-          </button>
-        ))}
-      </div>
+      {searchQuery.trim() === "" && (
+        <div
+          style={{
+            display: "flex",
+            gap: "8px",
+            flexWrap: "wrap",
+            paddingBottom: "8px",
+            borderBottom: "1px solid rgba(255, 255, 255, 0.05)"
+          }}
+          role="group"
+          aria-label="Filter kategori"
+        >
+          {FILTER_CATEGORIES.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => onCategoryChange(cat.id)}
+              className={`museum-cat-chip${activeCategory === cat.id ? " active" : ""}`}
+              style={{
+                padding: "6px 10px",
+                fontSize: "11px",
+                borderRadius: "20px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "4px",
+                transition: "all 0.2s"
+              }}
+            >
+              <span>{cat.icon}</span>
+              {t(cat.key) || cat.fallback[lang]}
+            </button>
+          ))}
+        </div>
+      )}
 
-      {/* ── SORT TOOLBAR ────────────────────────────────────────────── */}
+      {/* ── SEARCH BAR ────────────────────────────────────────────── */}
       <div 
         style={{ 
-          display: "flex",
-          gap: "8px",
-          height: "36px",
+          position: "relative",
           width: "100%",
+          display: "flex",
+          alignItems: "center",
+          marginBottom: "4px"
         }}
       >
-        {/* Sort Dropdown */}
-        <select
-          value={sortBy}
-          onChange={(e) => setSortBy(e.target.value)}
+        <Search 
+          size={14} 
+          style={{ 
+            position: "absolute", 
+            left: "12px", 
+            color: "rgba(255, 255, 255, 0.4)" 
+          }} 
+        />
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder={lang === "id" ? "Cari artefak..." : "Search artifacts..."}
           style={{
-            flex: "1 1 0%",
-            height: "100%",
-            padding: "0 10px",
-            fontSize: "11px",
+            width: "100%",
+            height: "36px",
+            padding: "0 32px 0 34px",
+            fontSize: "12px",
             background: "rgba(3, 8, 16, 0.6)",
-            border: "1px solid rgba(255,255,255,0.08)",
+            border: "1px solid rgba(255, 255, 255, 0.08)",
             borderRadius: "8px",
-            color: "var(--white-80)",
+            color: "var(--white-90)",
             outline: "none",
-            cursor: "pointer"
+            transition: "all 0.2s ease",
           }}
-        >
-          <option value="default">{lang === "id" ? "Urutkan" : "Sort"}</option>
-          <option value="name-asc">{lang === "id" ? "Nama A-Z" : "Name A-Z"}</option>
-          <option value="name-desc">{lang === "id" ? "Nama Z-A" : "Name Z-A"}</option>
-          <option value="province">{lang === "id" ? "Provinsi" : "Province"}</option>
-        </select>
+          className="museum-search-input"
+        />
+        <style>{`
+          .museum-search-input:focus {
+            border-color: rgba(253, 157, 36, 0.4) !important;
+            box-shadow: 0 0 10px rgba(253, 157, 36, 0.1);
+          }
+        `}</style>
+        {searchQuery && (
+          <button
+            onClick={() => setSearchQuery("")}
+            style={{
+              position: "absolute",
+              right: "10px",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: "rgba(255, 255, 255, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "4px"
+            }}
+          >
+            <X size={12} />
+          </button>
+        )}
       </div>
 
       {/* ── CURRENTLY VIEWING STATUS CARD ────────────────────────────── */}
@@ -291,7 +336,14 @@ export default function ArtifactList({
       <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
         {CATEGORY_KEYS.map((cat, groupIdx) => {
           const catItems = groupedArtifacts[cat.id];
-          const isExpanded = expandedCategories[cat.id];
+          
+          // If searching and this category has no items, hide the entire group!
+          if (searchQuery.trim() !== "" && catItems.length === 0) {
+            return null;
+          }
+
+          // If searching, force expand the category so search results are visible
+          const isExpanded = searchQuery.trim() !== "" ? true : expandedCategories[cat.id];
           const displayName = t(cat.key) || CATEGORY_NAMES_FALLBACK[cat.id][lang];
 
           // If filtering on activeCategory chip and it doesn't match, hide group

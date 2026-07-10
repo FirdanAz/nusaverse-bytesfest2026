@@ -94,3 +94,52 @@ export interface AIResponse {
 }
 
 export type Locale = "id" | "en";
+
+export interface Ingredient {
+  name_id: string;
+  name_en: string;
+}
+
+export interface PreparationStep {
+  step: number;
+  title_id: string;
+  title_en: string;
+  desc_id: string;
+  desc_en: string;
+}
+
+export interface CulturalMeaning {
+  title_id: string;
+  title_en: string;
+  desc_id: string;
+  desc_en: string;
+}
+
+export interface CulinaryFlavorProfile {
+  spiciness: number; // 1 = Low, 2 = Medium, 3 = High
+  sweetness: number;
+  savory: number;
+  richness: number;
+  texture: number;
+}
+
+export interface CulinaryData {
+  id: string;
+  category: "main-dishes" | "traditional-cakes" | "snacks" | "beverages" | "traditional-condiments";
+  title_id: string;
+  title_en: string;
+  province_id: string;
+  province_en: string;
+  description_id: string;
+  description_en: string;
+  history_id: string;
+  history_en: string;
+  ingredients: Ingredient[];
+  preparation: PreparationStep[];
+  culturalMeaning: CulturalMeaning[];
+  recognition?: { title_id: string; title_en: string } | null;
+  flavorProfile: CulinaryFlavorProfile;
+  gallery: string[];
+  relatedItems: string[];
+}
+

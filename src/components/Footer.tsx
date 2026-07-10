@@ -132,8 +132,8 @@ export default function Footer() {
                 {t("foot-col-2")}
               </h5>
               <ul className="footer-links-list">
-                <li className="footer-link-item"><a href="#sdgs">{t("foot-item-5")}</a></li>
-                <li className="footer-link-item"><a href="#sdgs">{t("foot-item-6")}</a></li>
+                <li className="footer-link-item"><a href="#culinary">{t("foot-item-5")}</a></li>
+                <li className="footer-link-item"><a href="#ai-guide">{t("foot-item-6")}</a></li>
                 <li className="footer-link-item"><a href="#language">{t("foot-item-7")}</a></li>
                 <li className="footer-link-item"><a href="#">{t("foot-item-8")}</a></li>
               </ul>
@@ -165,9 +165,6 @@ export default function Footer() {
               <div>
                 <strong style={{ color: "rgba(255,255,255,0.6)", fontWeight: 600 }}>{t("foot-sources-title")}: </strong>
                 {t("foot-sources-text")}
-              </div>
-              <div style={{ fontStyle: "italic" }}>
-                {t("foot-image-disclaimer")}
               </div>
             </div>
 

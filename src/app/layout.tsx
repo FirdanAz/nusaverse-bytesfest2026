@@ -29,6 +29,7 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://nusaverse.wpygroup.my.id"),
   title: "NUSAVERSE — Budaya Nusantara dalam Dimensi Digital",
   description:
     "NUSAVERSE adalah platform penemuan budaya digital Indonesia yang melestarikan dan memperkenalkan warisan leluhur melalui visual interaktif, arsip bahasa daerah, museum virtual 3D, dan linimasa sejarah nusantara.",
@@ -46,25 +47,28 @@ export const metadata: Metadata = {
   openGraph: {
     title: "NUSAVERSE — Budaya Nusantara dalam Dimensi Digital",
     description:
-      "Jelajahi kekayaan 38 provinsi, dengarkan 714 bahasa daerah, dan masuki museum virtual interaktif dalam petualangan melestarikan budaya Indonesia.",
+      "Jelajahi kekayaan 38 provinsi, pelajari 714 bahasa daerah, dan masuki museum virtual interaktif dalam petualangan melestarikan budaya Indonesia.",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=1200&q=80",
+        url: "/assets/images/indonesia_overview.png",
         width: 1200,
         height: 630,
-        alt: "NUSAVERSE",
+        alt: "NUSAVERSE — Budaya Nusantara dalam Dimensi Digital",
       },
     ],
     type: "website",
     locale: "id_ID",
-    url: "https://nusaverse.example.id/",
+    url: "https://nusaverse.wpygroup.my.id/",
   },
   twitter: {
     card: "summary_large_image",
     title: "NUSAVERSE — Budaya Nusantara dalam Dimensi Digital",
     description:
-      "Jelajahi kekayaan 38 provinsi, dengarkan 714 bahasa daerah, dan masuki museum virtual interaktif dalam petualangan melestarikan budaya Indonesia.",
-    images: ["https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=1200&q=80"],
+      "Jelajahi kekayaan 38 provinsi, pelajari 714 bahasa daerah, dan masuki museum virtual interaktif dalam petualangan melestarikan budaya Indonesia.",
+    images: ["/assets/images/indonesia_overview.png"],
+  },
+  icons: {
+    icon: "/favicon.ico",
   },
 };
 
@@ -85,7 +89,7 @@ export default function RootLayout({
               "@type": "WebSite",
               name: "NUSAVERSE",
               alternateName: "NUSAVERSE — Budaya Nusantara dalam Dimensi Digital",
-              url: "https://nusaverse.example.id/",
+              url: "https://nusaverse.wpygroup.my.id/",
               description:
                 "Platform penemuan budaya digital Indonesia yang melestarikan dan memperkenalkan warisan leluhur melalui visual interaktif, arsip bahasa daerah, museum virtual 3D, dan linimasa sejarah nusantara.",
               inLanguage: ["id", "en"],
