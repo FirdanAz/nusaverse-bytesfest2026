@@ -95,8 +95,8 @@ Ikon menggunakan Lucide React (open-source icon library). Elemen visual lain —
 
 ## Tim
 
-- Nama — peran
-- Nama — peran
+- Muhammad Firdan Azhari
+- Muhammad Syafi'i R Fikri
 - Nama — peran
 
 ## Lisensi

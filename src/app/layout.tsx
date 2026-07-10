@@ -5,9 +5,10 @@ import "./globals.css";
 export const viewport: Viewport = {
   themeColor: "#030A14",
   colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
 };
 
-// Configure Google Fonts with CSS Variables
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -20,7 +21,6 @@ const notoSerif = Noto_Serif({
   weight: ["400", "700"],
   style: ["normal", "italic"],
 });
-
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair-display",

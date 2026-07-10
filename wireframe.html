@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NUSAVERSE — Interactive Wireframe & UX Blueprint</title>
+  
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ─── COLOR SYSTEM & DESIGN TOKENS (LIGHT MINIMALIST) ─── */
+    :root {
+      --bg-main: #f5f5f5;
+      --bg-panel: #ffffff;
+      --border-color: #cccccc;
+      --border-dashed: #aaaaaa;
+      --text-main: #111111;
+      --text-muted: #666666;
+      --accent-black: #000000;
+      --accent-gray: #e0e0e0;
+      
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.5;
+      padding-bottom: 120px;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-main);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 4px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+    }
+
+    /* Wireframe UI Blocks */
+    .wire-box {
+      border: 1px dashed var(--border-dashed);
+      background-color: var(--bg-panel);
+      position: relative;
+      border-radius: 4px;
+    }
+
+    .wire-box-solid {
+      border: 1.5px solid var(--accent-black);
+      background-color: var(--bg-panel);
+      position: relative;
+      border-radius: 4px;
+    }
+
+    .gray-block {
+      background-color: var(--accent-gray);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .wire-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-muted);
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      padding: 2px 6px;
+      position: absolute;
+      top: -1px;
+      left: 12px;
+      z-index: 10;
+      transform: translateY(-50%);
+    }
+
+    /* Buttons */
+    .btn-solid {
+      background-color: var(--accent-black);
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 2px;
+    }
+
+    .btn-solid:hover {
+      opacity: 0.9;
+    }
+
+    .btn-outline {
+      background-color: var(--bg-panel);
+      color: var(--text-main);
+      border: 1.5px solid var(--accent-black);
+      padding: 9px 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+
+    .btn-outline:hover {
+      background-color: var(--bg-main);
+    }
+
+    /* ─── HEADER / NAVIGATION ─── */
+    header {
+      background-color: var(--bg-panel);
+      border-bottom: 1.5px solid var(--accent-black);
+      position: sticky;
+      top: 0;
+      z-index: 500;
+    }
+
+    .header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+    }
+
+    .logo {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 14px;
+      border: 1px solid var(--accent-black);
+      padding: 6px 16px;
+      background: var(--bg-main);
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+    }
+
+    nav a {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--text-main);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .lang-toggle {
+      border: 1px solid var(--border-color);
+      background: transparent;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      cursor: pointer;
+    }
+
+    /* ─── FLOATING LEGEND MENU (BOTTOM-RIGHT) ─── */
+    .legend-card {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 220px;
+      background: var(--accent-black);
+      color: #ffffff;
+      border: 1px solid var(--accent-black);
+      z-index: 999;
+      padding: 16px;
+      border-radius: 4px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s;
+    }
+
+    .legend-card.hidden {
+      transform: translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .legend-title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #888888;
+      border-bottom: 1px solid #333333;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .legend-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .legend-link {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #bbbbbb;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .legend-link:hover, .legend-link.active {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .toggle-legend-btn {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 999;
+      background: var(--accent-black);
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+
+    /* ─── SECTION COMMON STYLES ─── */
+    .section-wrapper {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-panel);
+    }
+
+    .section-wrapper:nth-child(even) {
+      background: var(--bg-main);
+    }
+
+    .section-title {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── 00. HERO SECTION ─── */
+    .hero-container {
+      padding: 60px 0;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      text-align: left;
+    }
+
+    .pill-floating {
+      position: absolute;
+      border: 1px solid var(--border-color);
+      background: var(--bg-panel);
+      padding: 6px 12px;
+      font-size: 10.5px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      border-radius: 2px;
+      cursor: pointer;
+      z-index: 20;
+    }
+
+    .pill-floating::before {
+      content: '★ ';
+      color: var(--text-main);
+    }
+
+    .hero-center-box {
+      border: 1px solid var(--border-color);
+      background: var(--bg-panel);
+      padding: 40px 24px;
+      border-radius: 4px;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      border: 1px solid var(--border-color);
+      padding: 4px 12px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    .hero-headline-block {
+      height: 100px;
+      width: 100%;
+      margin-bottom: 20px;
+      border: 1.5px solid var(--accent-black);
+    }
+
+    .hero-subheadline {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      justify-content: flex-start;
+      gap: 16px;
+    }
+
+    .hero-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      width: 100%;
+      border: 1.5px solid var(--accent-black);
+      background: var(--bg-panel);
+      margin-top: 24px;
+    }
+
+    .hero-stat-col {
+      padding: 24px;
+      border-right: 1.5px solid var(--accent-black);
+      text-align: center;
+    }
+
+    .hero-stat-col:last-child {
+      border-right: none;
+    }
+
+    .hero-stat-col h3 {
+      font-size: 24px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .hero-stat-col p {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-showcase-wire {
+      border: 1px dashed var(--border-dashed);
+      background: var(--bg-panel);
+      height: 420px;
+      border-radius: 8px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .scroll-indicator {
+      margin-top: 48px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── 01. URGENSI SECTION ─── */
+    .urgensi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .chart-container {
+      height: 300px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 24px;
+      border: 1px dashed var(--border-dashed);
+      background: var(--bg-panel);
+    }
+
+    .chart-bar {
+      width: 15%;
+      background: var(--accent-gray);
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .chart-bar::after {
+      content: attr(data-year);
+      position: absolute;
+      bottom: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--text-muted);
+    }
+
+    .chart-bar::before {
+      content: attr(data-val);
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    .urgensi-info h2 {
+      font-size: 24px;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+
+    .urgensi-info p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .urgensi-stat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .urgensi-card {
+      border: 1px solid var(--border-color);
+      padding: 16px;
+      border-radius: 2px;
+      background: var(--bg-panel);
+    }
+
+    .urgensi-card h4 {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .urgensi-card p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* ─── 02. PETA BUDAYA INTERAKTIF ─── */
+    .peta-layout {
+      display: grid;
+      grid-template-columns: 1.4fr 0.6fr;
+      gap: 24px;
+      height: 460px;
+    }
+
+    .peta-canvas {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .map-hotspot {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: var(--bg-panel);
+      border: 2px solid var(--accent-black);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 700;
+    }
+
+    .map-hotspot.active {
+      background: var(--accent-black);
+      color: #ffffff;
+    }
+
+    .peta-detail {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .peta-detail-top h3 {
+      font-size: 18px;
+      font-family: var(--font-mono);
+      margin-bottom: 4px;
+    }
+
+    .peta-detail-top span {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .peta-metadata {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 24px;
+      flex-grow: 1;
+    }
+
+    .metadata-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      border-bottom: 1px dashed var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    .metadata-row span:first-child {
+      color: var(--text-muted);
+    }
+
+    .metadata-row span:last-child {
+      font-weight: 700;
+    }
+
+    /* ─── 03. PRESERVASI BAHASA & AKSARA ─── */
+    .bahasa-layout {
+      display: grid;
+      grid-template-columns: 0.5fr 1.5fr;
+      gap: 24px;
+    }
+
+    .bahasa-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .bahasa-menu-btn {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      text-align: left;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .bahasa-menu-btn.active {
+      background: var(--accent-black);
+      color: #ffffff;
+      border-color: var(--accent-black);
+    }
+
+    .bahasa-panel {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+    }
+
+    .aksara-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .aksara-card {
+      aspect-ratio: 1;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: var(--bg-main);
+    }
+
+    .aksara-card:hover {
+      border-color: var(--accent-black);
+      background: var(--bg-panel);
+    }
+
+    .aksara-card span:first-child {
+      font-size: 20px;
+    }
+
+    .aksara-card span:last-child {
+      font-size: 9px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .bahasa-player {
+      border: 1px dashed var(--border-dashed);
+      background: var(--bg-main);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .waveform-visualizer {
+      height: 48px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-panel);
+      margin: 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 0 12px;
+    }
+
+    .waveform-bar {
+      flex-grow: 1;
+      background: var(--border-color);
+      height: 30%;
+    }
+    .waveform-bar:nth-child(2n) { height: 60%; }
+    .waveform-bar:nth-child(3n) { height: 80%; }
+    .waveform-bar.active {
+      background: var(--accent-black);
+    }
+
+    /* ─── 04. VIRTUAL MUSEUM ─── */
+    .museum-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      height: 420px;
+    }
+
+    .museum-viewport {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .museum-details {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hotspot-box {
+      border: 1px dashed var(--border-dashed);
+      background: var(--bg-main);
+      padding: 16px;
+      font-size: 11.5px;
+      margin-top: 16px;
+    }
+
+    /* ─── 05. HISTORICAL LINIMASA ─── */
+    .timeline-container {
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      background: var(--bg-panel);
+    }
+
+    .timeline-slider-track {
+      position: relative;
+      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .timeline-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--border-color);
+      z-index: 1;
+    }
+
+    .timeline-progress {
+      position: absolute;
+      left: 0;
+      height: 2px;
+      background: var(--accent-black);
+      z-index: 2;
+      transition: width 0.3s ease;
+    }
+
+    .timeline-node {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .timeline-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--bg-panel);
+      border: 2px solid var(--border-color);
+      margin-bottom: 8px;
+      transition: all 0.2s;
+    }
+
+    .timeline-node.active .timeline-dot {
+      background: var(--accent-black);
+      border-color: var(--accent-black);
+      transform: scale(1.2);
+    }
+
+    .timeline-node span {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .timeline-node.active span {
+      color: var(--text-main);
+    }
+
+    .timeline-content-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+    }
+
+    .timeline-card {
+      border: 1px solid var(--border-color);
+      padding: 16px;
+      background: var(--bg-main);
+    }
+
+    .timeline-card h4 {
+      font-size: 13.5px;
+      font-family: var(--font-mono);
+      margin-bottom: 6px;
+    }
+
+    .timeline-card p {
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    /* ─── 06. WARISAN KULINER ─── */
+    .kuliner-layout {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 24px;
+    }
+
+    .kuliner-dashboard {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .radar-mockup {
+      height: 160px;
+      border: 1px dashed var(--border-dashed);
+      background: var(--bg-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .radar-shape {
+      width: 80px;
+      height: 80px;
+      border: 1px solid var(--accent-black);
+      transform: rotate(45deg);
+    }
+
+    .radar-tag {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 8px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .radar-tag:nth-child(1) { top: 8px; }
+    .radar-tag:nth-child(2) { bottom: 8px; }
+    .radar-tag:nth-child(3) { left: 8px; }
+    .radar-tag:nth-child(4) { right: 8px; }
+
+    .kuliner-sidebar {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 400px;
+      overflow-y: auto;
+    }
+
+    .kuliner-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-panel);
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .kuliner-row.active {
+      border-color: var(--accent-black);
+      background: var(--bg-main);
+    }
+
+    /* ─── 07. NUSA AI ASSISTANT ─── */
+    .ai-grid {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .chat-box {
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .chat-log {
+      flex-grow: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .chat-bubble {
+      max-width: 80%;
+      padding: 10px 14px;
+      font-size: 12.5px;
+      border-radius: 2px;
+    }
+
+    .chat-bubble.ai {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      align-self: flex-start;
+    }
+
+    .chat-bubble.user {
+      background: var(--accent-black);
+      color: #ffffff;
+      align-self: flex-end;
+    }
+
+    .chat-suggestions {
+      display: flex;
+      gap: 6px;
+      padding: 8px 16px;
+      border-top: 1px dashed var(--border-dashed);
+    }
+
+    .chat-chip {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      padding: 4px 10px;
+      font-size: 10.5px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+    }
+
+    .chat-input-row {
+      display: flex;
+      padding: 12px 16px;
+      border-top: 1px solid var(--border-color);
+      gap: 8px;
+    }
+
+    .chat-input {
+      flex-grow: 1;
+      border: 1px solid var(--border-color);
+      padding: 8px 12px;
+      outline: none;
+      font-size: 12.5px;
+    }
+
+    /* ─── 08. SDGs ALIGNMENT ─── */
+    .sdg-section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-panel);
+    }
+
+    .sdg-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .sdg-card {
+      border: 1px solid var(--border-color);
+      background: var(--bg-main);
+      padding: 24px;
+    }
+
+    .sdg-card h4 {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      margin-bottom: 8px;
+    }
+
+    .sdg-card p {
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    /* ─── 09. CTA & FOOTER ─── */
+    .cta-section {
+      padding: 80px 0;
+      text-align: center;
+      background: var(--bg-main);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .cta-input-group {
+      display: inline-flex;
+      margin: 24px auto 0 auto;
+      gap: 8px;
+    }
+
+    footer {
+      background: var(--bg-panel);
+      padding: 48px 0;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 32px;
+    }
+
+    .footer-col h5 {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      color: var(--text-main);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-main);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border-color);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11.5px;
+    }
+
+    /* Responsive */
+    @media(max-width: 991px) {
+      .urgensi-grid, .peta-layout, .bahasa-layout, .bahasa-panel, .museum-layout, .timeline-content-grid, .kuliner-layout, .kuliner-dashboard, .ai-grid, .sdg-grid, .footer-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toggle Legend Button (Bottom-Left) -->
+  <button class="toggle-legend-btn" onclick="toggleLegend()">Sembunyikan Legend</button>
+
+  <!-- Floating Legend Menu (Bottom-Right) -->
+  <div class="legend-card" id="legendCard">
+    <div class="legend-title">Wireframe - Nusaverse</div>
+    <div class="legend-links">
+      <div class="legend-link active" onclick="scrollToSection('hero', this)"><span>00 - Hero</span></div>
+      <div class="legend-link" onclick="scrollToSection('urgensi', this)"><span>01 - Urgensi</span></div>
+      <div class="legend-link" onclick="scrollToSection('peta', this)"><span>02 - Peta</span></div>
+      <div class="legend-link" onclick="scrollToSection('bahasa', this)"><span>03 - Bahasa</span></div>
+      <div class="legend-link" onclick="scrollToSection('museum', this)"><span>04 - Museum</span></div>
+      <div class="legend-link" onclick="scrollToSection('sejarah', this)"><span>05 - Sejarah</span></div>
+      <div class="legend-link" onclick="scrollToSection('kuliner', this)"><span>06 - Kuliner * NEW</span></div>
+      <div class="legend-link" onclick="scrollToSection('ai', this)"><span>07 - Nusa AI</span></div>
+      <div class="legend-link" onclick="scrollToSection('cta', this)"><span>08 - CTA</span></div>
+    </div>
+    
+    <div class="legend-title" style="margin-top: 16px; border-top: 1px solid #333333; padding-top: 12px;">Legenda Notasi</div>
+    <div style="font-family: var(--font-mono); font-size: 8.5px; color: #888888; display: flex; flex-direction: column; gap: 6px; line-height: 1.4;">
+      <div>• ★ [Nama] = Aset Latar Belakang Cinematic</div>
+      <div>• [Dashed Box] = Komponen placeholder visual</div>
+      <div>• [Solid Box] = Kontainer status aktif</div>
+      <div>• [X.XXX] / [XX] = Placeholder data statistik</div>
+    </div>
+  </div>
+
+  <!-- ─── HEADER / NAVBAR ─── -->
+  <header>
+    <div class="container header-flex">
+      <div class="logo">NUSAVERSE</div>
+      <nav>
+        <a href="#hero" class="active">Home</a>
+        <a href="#urgensi">Urgensi</a>
+        <a href="#peta">Peta</a>
+        <a href="#bahasa">Bahasa</a>
+        <a href="#museum">Museum</a>
+        <a href="#sejarah">Sejarah</a>
+        <a href="#kuliner">Kuliner</a>
+        <a href="#ai">Nusa AI</a>
+      </nav>
+      <div class="header-actions">
+        <button class="lang-toggle">🌐 ID / EN</button>
+        <button class="btn-solid" style="padding: 8px 16px;">Gabung Waitlist</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── 00. HERO SECTION ─── -->
+  <section id="hero" class="section-wrapper" style="padding-top: 20px;">
+    <div class="container hero-container">
+      
+      <div class="hero-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
+        <!-- Left Column: Content & Stats -->
+        <div class="hero-content-left">
+          <div class="hero-center-box" style="border: none; padding: 0; background: transparent;">
+            <div class="hero-eyebrow">Digital Cultural Discovery Platform</div>
+            
+            <!-- H1 Headline Block -->
+            <div class="hero-headline-block gray-block" style="padding: 20px; margin: 16px 0;">
+              H1 - MAIN HEADLINE
+            </div>
+            
+            <p class="hero-subheadline" style="text-align: left;">
+              Subheadline - reformasi dokumentasi budaya Indonesia menjadi semesta digital terintegrasi
+            </p>
+            
+            <div class="hero-ctas" style="display: flex; gap: 12px; margin-top: 24px;">
+              <button class="btn-solid">> Mulai Menjelajah</button>
+              <button class="btn-outline">Kunjungi Museum</button>
+            </div>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="hero-stats-grid" style="margin-top: 48px;">
+            <div class="hero-stat-col">
+              <h3>[XXX]</h3>
+              <p>Bahasa Daerah</p>
+              <span style="font-family: var(--font-mono); font-size: 8px; color: var(--text-muted); display: block; margin-top: 4px;">(Aktual: 714)</span>
+            </div>
+            <div class="hero-stat-col">
+              <h3>[X.XXX]</h3>
+              <p>Suku Adat</p>
+              <span style="font-family: var(--font-mono); font-size: 8px; color: var(--text-muted); display: block; margin-top: 4px;">(Aktual: 1.340)</span>
+            </div>
+            <div class="hero-stat-col">
+              <h3>[XX]</h3>
+              <p>Provinsi</p>
+              <span style="font-family: var(--font-mono); font-size: 8px; color: var(--text-muted); display: block; margin-top: 4px;">(Aktual: 38)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive Map Showcase Placeholder & Background Hotspots -->
+        <div class="hero-content-right" style="position: relative;">
+          <div class="hero-showcase-wire" style="border: 1px dashed var(--border-dashed); padding: 40px; background: var(--bg-panel);">
+            <!-- Floating Background Hotspots -->
+            <div class="pill-floating" style="position: absolute; top: 10%; left: 5%; cursor: pointer;" onclick="alert('Spotlight: Candi Borobudur (Cinematic BG Hotspot)')">★ Borobudur</div>
+            <div class="pill-floating" style="position: absolute; top: 40%; left: 2%; cursor: pointer;" onclick="alert('Spotlight: Kesenian Batik (Cinematic BG Hotspot)')">★ Batik</div>
+            <div class="pill-floating" style="position: absolute; top: 75%; left: 10%; cursor: pointer;" onclick="alert('Spotlight: Wayang Kulit (Cinematic BG Hotspot)')">★ Wayang</div>
+            
+            <div class="pill-floating" style="position: absolute; top: 20%; right: 5%; cursor: pointer;" onclick="alert('Spotlight: Alat Musik Gamelan (Cinematic BG Hotspot)')">★ Gamelan</div>
+            <div class="pill-floating" style="position: absolute; top: 60%; right: 2%; cursor: pointer;" onclick="alert('Spotlight: Candi Prambanan (Cinematic BG Hotspot)')">★ Prambanan</div>
+
+            <div style="text-align: center; padding: 24px;">
+              <span class="wire-label">Visual Peta Hero (SVG / GeoJSON)</span>
+              <div class="gray-block" style="width: 260px; height: 160px; margin: 0 auto; background: #fdfdfd; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                Map Showcase Preview
+              </div>
+              <p style="font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); margin-top: 16px;">
+                [ PETA INTERAKTIF INDONESIA - HERO SHOWCASE ]
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 40px;">
+        <div class="scroll-indicator">Scroll</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 01. URGENSI KRISIS BUDAYA ─── -->
+  <section id="urgensi" class="section-wrapper">
+    <div class="container">
+      <div class="section-title">01 - Urgensi Krisis Budaya</div>
+      
+      <div class="urgensi-grid">
+        <div class="chart-container wire-box">
+          <span class="wire-label">Grafik Proyeksi Penurunan Bahasa</span>
+          
+          <div class="chart-bar" style="height: 90%;" data-year="2020" data-val="718"></div>
+          <div class="chart-bar" style="height: 60%;" data-year="2030" data-val="520"></div>
+          <div class="chart-bar" style="height: 40%;" data-year="2040" data-val="350"></div>
+          <div class="chart-bar" style="height: 20%;" data-year="2050" data-val="120"></div>
+        </div>
+
+        <div class="urgensi-info">
+          <h2>Setiap 14 Hari, Satu Bahasa Daerah Punah</h2>
+          <p>Globalisasi dan kurangnya dokumentasi digital mempercepat kepunahan bahasa ibu di daerah. Repositori digital Nusaverse mengintegrasikan arsip verbal guna melestarikan identitas nusantara.</p>
+          
+          <div class="urgensi-stat-row">
+            <div class="urgensi-card">
+              <h4>75+ Kritis</h4>
+              <p>Bahasa daerah berstatus kritis penutur aktif.</p>
+            </div>
+            <div class="urgensi-card">
+              <h4>11+ Punah</h4>
+              <p>Bahasa lokal yang resmi dinyatakan hilang.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 02. PETA BUDAYA INTERAKTIF ─── -->
+  <section id="peta" class="section-wrapper">
+    <div class="container">
+      <div class="section-title">02 - Peta Budaya Interaktif</div>
+      
+      <!-- Island Filter Bar -->
+      <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap;">
+        <button class="bahasa-menu-btn active" style="padding: 6px 12px;" onclick="filterPeta('all', this)">Semua Pulau</button>
+        <button class="bahasa-menu-btn" style="padding: 6px 12px;" onclick="filterPeta('sumatra', this)">Sumatra</button>
+        <button class="bahasa-menu-btn" style="padding: 6px 12px;" onclick="filterPeta('java', this)">Jawa</button>
+        <button class="bahasa-menu-btn" style="padding: 6px 12px;" onclick="filterPeta('kalimantan', this)">Kalimantan</button>
+        <button class="bahasa-menu-btn" style="padding: 6px 12px;" onclick="filterPeta('sulawesi', this)">Sulawesi</button>
+        <button class="bahasa-menu-btn" style="padding: 6px 12px;" onclick="filterPeta('nusatenggara', this)">Nusa Tenggara</button>
+        <button class="bahasa-menu-btn" style="padding: 6px 12px;" onclick="filterPeta('papua', this)">Papua</button>
+      </div>
+
+      <div class="peta-layout">
+        <div class="peta-canvas wire-box">
+          <span class="wire-label">Visual Peta Indonesia (SVG Vector Node Map)</span>
+          
+          <!-- Hotspots -->
+          <div class="map-hotspot active" id="pin-sumatra" style="top: 30%; left: 15%;" onclick="selectProvince('Sumatra', 'Negara Kepulauan Nusantara', '11 Bahasa Daerah', '9+ Warisan Dunia', 'Rumah bagi kekayaan alam dan tradisi Minang, Batak, Melayu.', this)">1</div>
+          <div class="map-hotspot" id="pin-java" style="top: 60%; left: 35%;" onclick="selectProvince('Jawa', 'Kepulauan Jawa', '5 Bahasa Daerah', '4+ Warisan Dunia', 'Pusat kebudayaan Jawa, Sunda, dan situs sejarah agung.', this)">2</div>
+          <div class="map-hotspot" id="pin-kalimantan" style="top: 40%; left: 45%;" onclick="selectProvince('Kalimantan', 'Kepulauan Kalimantan', '10+ Bahasa Daerah', '1+ Warisan Dunia', 'Hutan hujan tropis dan tradisi suku Dayak yang kaya.', this)">3</div>
+          <div class="map-hotspot" id="pin-sulawesi" style="top: 45%; left: 55%;" onclick="selectProvince('Sulawesi', 'Kepulauan Sulawesi', '14 Bahasa Daerah', '2+ Warisan Dunia', 'Poros maritim Bugis, Makassar, dan tradisi unik Toraja.', this)">4</div>
+          <div class="map-hotspot" id="pin-nusatenggara" style="top: 62%; left: 60%;" onclick="selectProvince('Nusa Tenggara', 'Kepulauan Nusa Tenggara', '8+ Bahasa Daerah', '2+ Warisan Dunia', 'Kekayaan seni tenun ikat dan alam komodo.', this)">5</div>
+          <div class="map-hotspot" id="pin-papua" style="top: 55%; left: 85%;" onclick="selectProvince('Papua', 'Kepulauan Papua', '100+ Bahasa Daerah', '1+ Warisan Dunia', 'Kebudayaan suku Asmat, Dani, dan alam pegunungan tinggi.', this)">6</div>
+        </div>
+
+        <div class="peta-detail wire-box-solid">
+          <span class="wire-label">Informasi Wilayah</span>
+          
+          <div class="peta-detail-top">
+            <span id="mapProvinceIsland">Negara Kepulauan Nusantara</span>
+            <h3 id="mapProvinceName">Indonesia</h3>
+          </div>
+
+          <div style="margin-top: 12px; font-size: 12px; color: var(--text-muted);" id="mapProvinceDesc">
+            Negara kepulauan terbesar di dunia yang terbentang dari Sabang sampai Merauke. Rumah bagi 1.300+ suku bangsa dan 718 bahasa daerah.
+          </div>
+
+          <div class="peta-metadata">
+            <div class="metadata-row">
+              <span>Bahasa Daerah:</span>
+              <span id="mapProvinceLangs">718 Bahasa Daerah</span>
+            </div>
+            <div class="metadata-row">
+              <span>Warisan UNESCO:</span>
+              <span id="mapProvinceAssets">9+ Warisan Dunia</span>
+            </div>
+          </div>
+
+          <button class="btn-solid" style="width: 100%; justify-content: center;">Buka Repositori Daerah</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 03. PRESERVASI BAHASA & AKSARA ─── -->
+  <section id="bahasa" class="section-wrapper">
+    <div class="container">
+      <div class="section-title">03 - Preservasi Bahasa &amp; Aksara</div>
+      
+      <div class="bahasa-layout">
+        <div class="bahasa-sidebar">
+          <button class="bahasa-menu-btn active" onclick="changeAksara('jawa', this)">Bahasa Jawa</button>
+          <button class="bahasa-menu-btn" onclick="changeAksara('sunda', this)">Bahasa Sunda</button>
+          <button class="bahasa-menu-btn" onclick="changeAksara('batak', this)">Bahasa Batak Karo</button>
+          <button class="bahasa-menu-btn" onclick="changeAksara('bugis', this)">Bahasa Bugis</button>
+          <button class="bahasa-menu-btn" onclick="changeAksara('asmat', this)">Bahasa Asmat</button>
+        </div>
+
+        <div class="bahasa-panel wire-box">
+          <span class="wire-label">Unicode Aksara &amp; Kamus Frasa</span>
+          
+          <div>
+            <h4 style="font-size: 13px; font-family: var(--font-mono); margin-bottom: 12px; text-transform: uppercase;" id="aksaraName">Karakter Aksara Jawa</h4>
+            
+            <!-- Native Script Banner Box -->
+            <div class="gray-block" style="height: 60px; font-size: 24px; font-weight: normal; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; background: #ffffff;" id="aksaraBanner">
+              ꦱꦸꦒꦼꦁꦲꦼꦚꦿꦁ
+            </div>
+
+            <div class="aksara-grid" id="aksaraGrid">
+              <div class="aksara-card" onclick="alert('Flip: Ha')"><span>ꦲ</span><span>Ha</span></div>
+              <div class="aksara-card" onclick="alert('Flip: Na')"><span>ꦵ</span><span>Na</span></div>
+              <div class="aksara-card" onclick="alert('Flip: Ca')"><span>ꦕ</span><span>Ca</span></div>
+              <div class="aksara-card" onclick="alert('Flip: Ra')"><span>ꦗ</span><span>Ra</span></div>
+              <div class="aksara-card" onclick="alert('Flip: Ka')"><span>ꦏ</span><span>Ka</span></div>
+              <div class="aksara-card" onclick="alert('Flip: Da')"><span>ꦢ</span><span>Da</span></div>
+              <div class="aksara-card" onclick="alert('Flip: Ta')"><span>ꦯ</span><span>Ta</span></div>
+              <div class="aksara-card" onclick="alert('Flip: Sa')"><span>ꦱ</span><span>Sa</span></div>
+            </div>
+            
+            <p style="font-size: 9px; color: var(--text-muted); margin-top: 8px; font-family: var(--font-mono); text-align: center;">
+              [ Klik karakter aksara untuk membalik kartu (Flip) ]
+            </p>
+          </div>
+
+          <div class="bahasa-player" style="justify-content: flex-start; gap: 20px;">
+            <div>
+              <span style="font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; color: var(--text-muted);" id="bahasaUrgency">Status: Rentan</span>
+              <h4 style="font-size: 16px; margin: 4px 0;" id="bahasaPhrase">"Sugeng Enjang"</h4>
+              <p style="font-size: 12px; color: var(--text-muted);" id="bahasaMeaning">Artinya: Selamat Pagi (Jawa Krama)</p>
+            </div>
+            
+            <div style="border-top: 1px dashed var(--border-dashed); padding-top: 16px; font-size: 11px; color: var(--text-muted);">
+              <strong>Suku Penutur:</strong> Jawa<br>
+              <strong>Distribusi:</strong> Jawa Tengah &amp; Jawa Timur
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 04. VIRTUAL MUSEUM 3D ─── -->
+  <section id="museum" class="section-wrapper">
+    <div class="container">
+      <div class="section-title">04 - Museum Artefak 3D Virtual</div>
+      
+      <div class="museum-layout">
+        <div class="museum-viewport wire-box">
+          <span class="wire-label">3D Canvas (WebGL / Interactive Mesh)</span>
+          
+          <div style="text-align: center;">
+            <div style="font-size: 32px; margin-bottom: 8px;">🏺</div>
+            <h4 style="font-family: var(--font-mono); font-size: 12px; text-transform: uppercase;">Simulasi Rotasi 3D</h4>
+            <p style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">[ Seret untuk menguji interaksi ]</p>
+          </div>
+          
+          <!-- Mock Hotspots -->
+          <div class="museum-hotspot" style="top: 30%; left: 45%; background: #fbbf24; box-shadow: 0 0 10px #fbbf24; border: none; width: 10px; height: 10px;" onclick="showMuseumHotspot('Gagang Senjata', 'Ukiran naga pusaka yang melambangkan perlindungan spiritual.')"></div>
+          <div class="museum-hotspot" style="top: 55%; left: 52%; background: #fbbf24; box-shadow: 0 0 10px #fbbf24; border: none; width: 10px; height: 10px;" onclick="showMuseumHotspot('Bilah Keris', 'Pola pamor besi nikel meteorit yang ditempa ratusan lapis.')"></div>
+        </div>
+
+        <div class="museum-details wire-box-solid">
+          <span class="wire-label">Metadata &amp; Sejarah Artefak</span>
+          
+          <div>
+            <span style="font-size: 10px; font-family: var(--font-mono); text-transform: uppercase; color: var(--text-muted);">Senjata Tradisional</span>
+            <h3 style="font-size: 20px; font-family: var(--font-mono); margin-top: 4px;">Keris Luk Sembilan</h3>
+            <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px;">Asal Daerah: D.I. Yogyakarta</p>
+            
+            <div class="hotspot-box" id="museumHotspotBox">
+              <strong style="display: block; margin-bottom: 4px;">Info Titik Hotspot</strong>
+              Pilih titik kuning pada model 3D di samping untuk melihat makna filosofi bagian artefak.
+            </div>
+          </div>
+
+          <div style="border-top: 1.5px solid var(--accent-black); padding-top: 16px; display: flex; flex-direction: column; gap: 8px; font-size: 12px;">
+            <div class="metadata-row"><span>Era Pembuatan:</span><span>Abad 14 M</span></div>
+            <div class="metadata-row"><span>Status Registrasi:</span><span>Warisan UNESCO (2008)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 05. LINIMASA SEJARAH NUSANTARA ─── -->
+  <section id="sejarah" class="section-wrapper">
+    <div class="container">
+      <div class="section-title">05 - Linimasa Sejarah Nusantara</div>
+      
+      <div class="timeline-container">
+        <div class="timeline-slider-track">
+          <div class="timeline-line"></div>
+          <div class="timeline-progress" id="tBar" style="width: 40%;"></div>
+          
+          <div class="timeline-node" onclick="changeTimeline(0, 'pre', this)">
+            <div class="timeline-dot"></div>
+            <span>Prasejarah</span>
+          </div>
+          <div class="timeline-node" onclick="changeTimeline(20, 'classical', this)">
+            <div class="timeline-dot"></div>
+            <span>Klasik</span>
+          </div>
+          <div class="timeline-node active" onclick="changeTimeline(40, 'maritime', this)">
+            <div class="timeline-dot"></div>
+            <span>Kemaritiman</span>
+          </div>
+          <div class="timeline-node" onclick="changeTimeline(60, 'colonial', this)">
+            <div class="timeline-dot"></div>
+            <span>Kolonial</span>
+          </div>
+          <div class="timeline-node" onclick="changeTimeline(80, 'independence', this)">
+            <div class="timeline-dot"></div>
+            <span>Kemerdekaan</span>
+          </div>
+          <div class="timeline-node" onclick="changeTimeline(100, 'modern', this)">
+            <div class="timeline-dot"></div>
+            <span>Era Digital</span>
+          </div>
+        </div>
+
+        <div class="timeline-content-grid">
+          <div class="timeline-card" id="timelineCard">
+            <h4 id="tTitle">Kemaharajaan Sriwijaya &amp; Majapahit (Abad ke-7 M)</h4>
+            <p id="tDesc">Sriwijaya dan Majapahit mendominasi jalur perdagangan maritim, mengonsolidasikan poros kedaulatan kepulauan nusantara melalui armada laut agung.</p>
+          </div>
+
+          <div class="gray-block" style="height: 120px;" id="tGraphicLabel">
+            Visual Ilustrasi Kemaritiman
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 06. ARSIP WARISAN KULINER ─── -->
+  <section id="kuliner" class="section-wrapper">
+    <div class="container">
+      <div class="section-title">06 - Arsip Warisan Kuliner * NEW</div>
+      
+      <div class="kuliner-layout">
+        <div class="kuliner-dashboard wire-box-solid">
+          <span class="wire-label">Panel Informasi Kuliner</span>
+          
+          <div>
+            <div class="gray-block" style="height: 140px; margin-bottom: 16px;" id="kulinerImg">
+              Foto Rendang
+            </div>
+            <h3 style="font-size: 20px; font-family: var(--font-mono);" id="kulName">Rendang</h3>
+            <span style="font-size: 11px; color: var(--text-muted);" id="kulOrigin">Provinsi: Sumatra Barat</span>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 12px;" id="kulDesc">
+              Daging sapi tradisional yang dimasak lambat dalam rempah-rempah dan santan kental hingga berkaramel hitam kering alami.
+            </p>
+          </div>
+
+          <div style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h4 style="font-size: 11px; text-transform: uppercase; margin-bottom: 8px; color: var(--text-muted);">Profil Rasa</h4>
+              <div class="radar-mockup">
+                <div class="radar-shape"></div>
+                <div class="radar-tag">Pedas</div>
+                <div class="radar-tag">Manis</div>
+                <div class="radar-tag">Gurih</div>
+                <div class="radar-tag">Rempah</div>
+              </div>
+            </div>
+
+            <div style="border-top: 1.5px solid var(--accent-black); padding-top: 16px; font-size: 12px; margin-top: 16px;">
+              <strong>Makna Adat:</strong>
+              <span style="display: block; color: var(--text-muted); margin-top: 4px;" id="kulPhilosophy">Melambangkan kebersamaan dan musyawarah adat Minang.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="kuliner-sidebar wire-box">
+          <span class="wire-label">Pilih Jenis Makanan</span>
+          
+          <input type="text" placeholder="Cari kuliner..." class="chat-input" style="width: 100%; font-size: 11px; margin-bottom: 16px;">
+          
+          <div class="legend-links">
+            <button class="kuliner-row active" onclick="swapKuliner('Rendang', 'Sumatra Barat', 'Daging sapi tradisional yang dimasak lambat dalam rempah-rempah dan santan kental hingga berkaramel hitam kering alami.', 'Melambangkan kebersamaan dan musyawarah adat Minang.', 'Foto Rendang', this)">
+              <div class="gray-block" style="width: 24px; height: 24px;">🍳</div>
+              <div style="text-align: left; margin-left: 8px;">
+                <h5 style="font-size: 12px;">Rendang</h5>
+                <span style="font-size: 9px; color: var(--text-muted);">Sumatra Barat</span>
+              </div>
+            </button>
+            <button class="kuliner-row" onclick="swapKuliner('Gudeg', 'DI Yogyakarta', 'Sajian nangka muda manis yang direbus lama dalam kuali tanah liat bersama daun jati untuk memberi rona merah kecokelatan.', 'Mengajarkan nilai sabar dalam kebersahajaan.', 'Foto Gudeg', this)">
+              <div class="gray-block" style="width: 24px; height: 24px;">🍳</div>
+              <div style="text-align: left; margin-left: 8px;">
+                <h5 style="font-size: 12px;">Gudeg</h5>
+                <span style="font-size: 9px; color: var(--text-muted);">DI Yogyakarta</span>
+              </div>
+            </button>
+            <button class="kuliner-row" onclick="swapKuliner('Papeda', 'Papua', 'Bubur sagu murni kenyal bertekstur jeli yang disajikan hangat bersama kaldu kunyit ikan tongkol.', 'Melambangkan persaudaraan antar suku klan.', 'Foto Papeda', this)">
+              <div class="gray-block" style="width: 24px; height: 24px;">🍳</div>
+              <div style="text-align: left; margin-left: 8px;">
+                <h5 style="font-size: 12px;">Papeda</h5>
+                <span style="font-size: 9px; color: var(--text-muted);">Papua</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 07. NUSA AI ASSISTANT ─── -->
+  <section id="ai" class="section-wrapper">
+    <div class="container">
+      <div class="section-title">07 - Nusa AI Budaya Assistant</div>
+      
+      <div class="ai-grid">
+        <div>
+          <h2>Tanya Nusa, AI Pendamping Budaya</h2>
+          <p style="color: var(--text-muted); margin-top: 12px; font-size: 13.5px;">Dapatkan rekomendasi itinerary budaya, terjemahan frasa kuno secara instan, serta penjelasan filosofi upacara adat secara cepat.</p>
+          
+          <div style="background: var(--bg-main); border: 1.5px solid var(--accent-black); padding: 16px; margin-top: 24px; font-size: 12px;">
+            <strong>Modul Kemampuan AI:</strong>
+            <p style="margin-top: 8px;">• Perancang Rencana Wisata Ekowisata</p>
+            <p>• Transkripsi Aksara Kuno (OCR)</p>
+            <p>• Peta Rekomendasi Destinasi Kustom</p>
+          </div>
+        </div>
+
+        <div class="chat-box wire-box-solid">
+          <span class="wire-label">Nusa AI Chatbot Simulator</span>
+          
+          <div class="chat-log" id="chatBox">
+            <div class="chat-bubble ai">
+              Halo! Saya Nusa. Tanyakan apa saja mengenai aksara daerah, sejarah kerajaan, atau tradisi adat nusantara!
+            </div>
+          </div>
+
+          <div class="chat-suggestions">
+            <button class="chat-chip" onclick="clickChatChip('Berapa sisa bahasa daerah yang terancam punah?')">Sisa Bahasa Kritis</button>
+            <button class="chat-chip" onclick="clickChatChip('Mengapa Candi Borobudur dibangun?')">Pembangunan Borobudur</button>
+          </div>
+
+          <div class="chat-input-row">
+            <input type="text" placeholder="Tanyakan pemandu budaya AI..." class="chat-input" id="cInput" onkeydown="chatInputKey(event)">
+            <button class="btn-solid" onclick="sendChat()">Kirim</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── 08. CTA & FOOTER ─── -->
+  <section id="cta" class="cta-section">
+    <div class="container">
+      <div class="section-title">08 - Gabung Waitlist &amp; Informasi</div>
+      
+      <h2>Mari Ikut Serta Melindungi Budaya</h2>
+      <p style="color: var(--text-muted); font-size: 13.5px; max-width: 580px; margin: 12px auto 0 auto;">Daftar untuk menjadi penguji coba beta tertutup dan ikut mendokumentasikan bahasa serta tradisi lokal di daerah Anda.</p>
+      
+      <div class="cta-input-group">
+        <input type="email" placeholder="Alamat email Anda..." class="chat-input" style="width: 280px;">
+        <button class="btn-solid">Daftar Waitlist</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h5 style="font-size: 13px; font-weight: 800; margin-bottom: 12px;">NUSAVERSE</h5>
+          <p style="font-size: 12px; line-height: 1.6;">Revolusi platform penemuan kebudayaan terintegrasi guna menghidupkan kembali bahasa, sejarah, dan kesenian nusantara.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Penjelajahan</h5>
+          <div class="footer-links">
+            <a href="#peta">Peta Etnografis</a>
+            <a href="#bahasa">Arsip Bahasa</a>
+            <a href="#museum">Museum Virtual</a>
+            <a href="#sejarah">Linimasa Era</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Kemitraan</h5>
+          <div class="footer-links">
+            <a href="#kuliner">Warisan Kuliner</a>
+            <a href="#ai">Pemandu AI</a>
+            <a href="#">Kolaborasi Riset</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 NUSAVERSE. SDGs Creative Web Competition Entry.</span>
+        <span>Dibuat untuk 714 Bahasa Daerah dan 1,340 Suku Adat Indonesia.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── INTERACTIVE WIREFRAME LOGIC ─── -->
+  <script>
+    // 1. Toggled Floating Legend Menu
+    function toggleLegend() {
+      const card = document.getElementById('legendCard');
+      const btn = document.querySelector('.toggle-legend-btn');
+      
+      if (card.classList.contains('hidden')) {
+        card.classList.remove('hidden');
+        btn.innerText = 'Sembunyikan Legend';
+      } else {
+        card.classList.add('hidden');
+        btn.innerText = 'Tampilkan Legend';
+      }
+    }
+
+    // 2. Smooth scrolling to sections
+    function scrollToSection(id, element) {
+      const section = document.getElementById(id);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      const links = document.querySelectorAll('.legend-link');
+      links.forEach(l => l.classList.remove('active'));
+      element.classList.add('active');
+
+      const navLinks = document.querySelectorAll('nav a');
+      navLinks.forEach(n => {
+        n.classList.remove('active');
+        if (n.getAttribute('href') === '#' + id || (id === 'hero' && n.getAttribute('href') === '#hero')) {
+          n.classList.add('active');
+        }
+      });
+    }
+
+    function selectProvince(name, island, langs, unesco, desc, element) {
+      document.getElementById('mapProvinceName').innerText = name;
+      document.getElementById('mapProvinceIsland').innerText = island;
+      document.getElementById('mapProvinceLangs').innerText = langs;
+      document.getElementById('mapProvinceAssets').innerText = unesco;
+      document.getElementById('mapProvinceDesc').innerText = desc;
+
+      const hotspots = document.querySelectorAll('.map-hotspot');
+      hotspots.forEach(h => h.classList.remove('active'));
+      if (element) element.classList.add('active');
+    }
+
+    function filterPeta(island, button) {
+      const hotspots = document.querySelectorAll('.map-hotspot');
+      hotspots.forEach(h => {
+        h.style.opacity = '1';
+        h.classList.remove('active');
+      });
+
+      const buttons = document.querySelectorAll('.peta-layout button, button[onclick^="filterPeta"]');
+      buttons.forEach(b => b.classList.remove('active'));
+      button.classList.add('active');
+
+      if (island === 'all') {
+        selectProvince('Indonesia', 'Negara Kepulauan Nusantara', '718 Bahasa Daerah', '9+ Warisan Dunia', 'Negara kepulauan terbesar di dunia yang terbentang dari Sabang sampai Merauke. Rumah bagi 1.300+ suku bangsa.', null);
+      } else {
+        const activePin = document.getElementById('pin-' + island);
+        if (activePin) {
+          activePin.click();
+        }
+      }
+    }
+
+    function changeAksara(lang, button) {
+      const buttons = document.querySelectorAll('.bahasa-sidebar .bahasa-menu-btn');
+      buttons.forEach(b => b.classList.remove('active'));
+      button.classList.add('active');
+
+      const name = document.getElementById('aksaraName');
+      const banner = document.getElementById('aksaraBanner');
+      const grid = document.getElementById('aksaraGrid');
+      const phrase = document.getElementById('bahasaPhrase');
+      const meaning = document.getElementById('bahasaMeaning');
+      const urgency = document.getElementById('bahasaUrgency');
+
+      if (lang === 'jawa') {
+        name.innerText = 'Karakter Aksara Jawa';
+        banner.innerText = 'ꦱꦸꦒꦼꦁꦲꦼꦚꦿꦁ';
+        urgency.innerText = 'Status: Rentan';
+        phrase.innerText = '"Sugeng Enjang"';
+        meaning.innerText = 'Artinya: Selamat Pagi (Jawa Krama)';
+        grid.innerHTML = `
+          <div class="aksara-card" onclick="alert('Flip: Ha')"><span>ꦲ</span><span>Ha</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Na')"><span>ꦵ</span><span>Na</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ca')"><span>ꦕ</span><span>Ca</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ra')"><span>ꦗ</span><span>Ra</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ka')"><span>ꦏ</span><span>Ka</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Da')"><span>ꦢ</span><span>Da</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ta')"><span>ꦯ</span><span>Ta</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Sa')"><span>ꦱ</span><span>Sa</span></div>
+        `;
+      } else if (lang === 'sunda') {
+        name.innerText = 'Karakter Aksara Sunda';
+        banner.innerText = 'ꦮꦶꦭꦿꦸꦗꦼꦁꦠꦼꦥꦁ';
+        urgency.innerText = 'Status: Rentan';
+        phrase.innerText = '"Wilujeng Tepang"';
+        meaning.innerText = 'Artinya: Selamat Bertemu';
+        grid.innerHTML = `
+          <div class="aksara-card" onclick="alert('Flip: Ka')"><span>ꦏ</span><span>Ka</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ga')"><span>ꦒ</span><span>Ga</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Nga')"><span>ꦔ</span><span>Nga</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ca')"><span>ꦕ</span><span>Ca</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ja')"><span>ꦗ</span><span>Ja</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Nya')"><span>ꦚ</span><span>Nya</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ta')"><span>ꦠ</span><span>Ta</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Da')"><span>ꦢ</span><span>Da</span></div>
+        `;
+      } else if (lang === 'batak') {
+        name.innerText = 'Karakter Surat Batak';
+        banner.innerText = 'ᯔᯩcoalᯱᯃᯱ';
+        urgency.innerText = 'Status: Rentan';
+        phrase.innerText = '"Mejuah-juah"';
+        meaning.innerText = 'Artinya: Selamat / Sehat Sejahtera';
+        grid.innerHTML = `
+          <div class="aksara-card" onclick="alert('Flip: A')"><span>a</span><span>A</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ha')"><span>6</span><span>Ha</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ma')"><span>ᯔ</span><span>Ma</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Na')"><span>ᯓ</span><span>Na</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ra')"><span>ᯕ</span><span>Ra</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ta')"><span>ᯗ</span><span>Ta</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ba')"><span>Overlay</span><span>Ba</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Pa')"><span>ᯄ</span><span>Pa</span></div>
+        `;
+      } else if (lang === 'bugis') {
+        name.innerText = 'Karakter Aksara Lontara';
+        banner.innerText = 'ᨕᨁ ᨀᨑᨙᨅ';
+        urgency.innerText = 'Status: Terancam';
+        phrase.innerText = '"Aga Kareba"';
+        meaning.innerText = 'Artinya: Apa Kabar?';
+        grid.innerHTML = `
+          <div class="aksara-card" onclick="alert('Flip: Ka')"><span>ᨀ</span><span>Ka</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ga')"><span>ᨁ</span><span>Ga</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Nga')"><span>ᨂ</span><span>Nga</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Pa')"><span>ᨄ</span><span>Pa</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ba')"><span>ᨅ</span><span>Ba</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ma')"><span>ᨆ</span><span>Ma</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Ta')"><span>ᨈ</span><span>Ta</span></div>
+          <div class="aksara-card" onclick="alert('Flip: Da')"><span>ᨉ</span><span>Da</span></div>
+        `;
+      } else if (lang === 'asmat') {
+        name.innerText = 'Suku Asmat (Bahasa Lisan)';
+        banner.innerText = 'Afore';
+        urgency.innerText = 'Status: Kritis';
+        phrase.innerText = '"Afore"';
+        meaning.innerText = 'Artinya: Halo / Selamat Datang';
+        grid.innerHTML = `
+          <div class="aksara-card" style="width:100%; grid-column: span 4;" onclick="alert('Bahasa Asmat merupakan rumpun lisan tanpa sistem aksara tradisional.')">
+            <span>Tradisi Lisan</span>
+            <span style="font-size:10px;">(Tidak Memiliki Sistem Aksara Kuno)</span>
+          </div>
+        `;
+      }
+    }
+
+    function playAudioPhrase() {
+      const bars = document.querySelectorAll('.waveform-bar');
+      bars.forEach(bar => {
+        bar.classList.add('active');
+        setTimeout(() => {
+          bar.style.height = Math.floor(Math.random() * 80 + 20) + '%';
+        }, 100);
+      });
+      alert('[Audio]: Memutar rekaman vokal dari penutur asli daerah.');
+    }
+
+    function showMuseumHotspot(title, desc) {
+      document.getElementById('museumHotspotBox').innerHTML = `
+        <strong style="display: block; margin-bottom: 4px; color: #fbbf24;">Detail: ${title}</strong>
+        ${desc}
+      `;
+    }
+
+    function changeTimeline(percentage, era, element) {
+      document.getElementById('tBar').style.width = percentage + '%';
+      
+      const nodes = document.querySelectorAll('.timeline-node');
+      nodes.forEach(n => n.classList.remove('active'));
+      element.classList.add('active');
+
+      const card = document.getElementById('timelineCard');
+      const label = document.getElementById('tGraphicLabel');
+
+      if (era === 'pre') {
+        card.innerHTML = `
+          <h4>Era Migrasi Austronesia (~2500 SM)</h4>
+          <p>Nenek moyang bangsa Indonesia menyebar di seluruh kepulauan nusantara menggunakan teknologi kapal cadik pelayaran canggih.</p>
+        `;
+        label.innerText = 'Visual Ilustrasi Prasejarah';
+      } else if (era === 'classical') {
+        card.innerHTML = `
+          <h4>Kemunculan Kerajaan Tertua (Abad ke-4 M)</h4>
+          <p>Penemuan Prasasti Yupa di Kutai, Kalimantan Timur menandai masa peralihan nusantara memasuki zaman sejarah aksara tertulis.</p>
+        `;
+        label.innerText = 'Ilustrasi Prasasti Klasik';
+      } else if (era === 'maritime') {
+        card.innerHTML = `
+          <h4>Kemaharajaan Sriwijaya &amp; Majapahit (Abad ke-7 M)</h4>
+          <p>Sriwijaya dan Majapahit mendominasi jalur perdagangan maritim, mengonsolidasikan poros kedaulatan kepulauan nusantara melalui armada laut agung.</p>
+        `;
+        label.innerText = 'Visual Ilustrasi Kemaritiman';
+      } else if (era === 'colonial') {
+        card.innerHTML = `
+          <h4>Poros Dagang &amp; Kolonialisme (Abad ke-16 M)</h4>
+          <p>Kedatangan bangsa Eropa memperebutkan hegemoni rempah-rempah Maluku, memicu perlawanan kerajaan nusantara.</p>
+        `;
+        label.innerText = 'Peta Benteng Kolonial';
+      } else if (era === 'independence') {
+        card.innerHTML = `
+          <h4>Deklarasi Kemerdekaan RI (1945)</h4>
+          <p>Proklamasi kemerdekaan dibacakan oleh Soekarno-Hatta, mempersatukan 17.000 pulau ke dalam naungan kedaulatan NKRI.</p>
+        `;
+        label.innerText = 'Diagram Kedaulatan Modern';
+      } else if (era === 'modern') {
+        card.innerHTML = `
+          <h4>Revolusi Kebudayaan Digital (Era Digital)</h4>
+          <p>Pemberdayaan repositori digital berskala nasional guna melestarikan dan merevitalisasi warisan budaya leluhur secara global.</p>
+        `;
+        label.innerText = 'Diagram Web Nusaverse';
+      }
+    }
+
+    function swapKuliner(name, origin, desc, philosophy, imgLabel, button) {
+      document.getElementById('kulName').innerText = name;
+      document.getElementById('kulOrigin').innerText = "Provinsi: " + origin;
+      document.getElementById('kulDesc').innerText = desc;
+      document.getElementById('kulPhilosophy').innerText = philosophy;
+      document.getElementById('kulinerImg').innerText = imgLabel;
+
+      const rows = document.querySelectorAll('.kuliner-row');
+      rows.forEach(r => r.classList.remove('active'));
+      button.classList.add('active');
+    }
+
+    function clickChatChip(text) {
+      document.getElementById('cInput').value = text;
+      sendChat();
+    }
+
+    function chatInputKey(event) {
+      if (event.key === 'Enter') {
+        sendChat();
+      }
+    }
+
+    function sendChat() {
+      const input = document.getElementById('cInput');
+      const query = input.value.trim();
+      if (!query) return;
+
+      const chatBox = document.getElementById('chatBox');
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'chat-bubble user';
+      userMsg.innerText = query;
+      chatBox.appendChild(userMsg);
+      input.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      const aiLoader = document.createElement('div');
+      aiLoader.className = 'chat-bubble ai';
+      aiLoader.innerText = "Nusa sedang mencari database...";
+      chatBox.appendChild(aiLoader);
+
+      setTimeout(() => {
+        let answer = "Pertanyaan Anda telah diterima. Di versi rilis, Nusa AI akan menganalisis data etnografis dan membalas secara instan.";
+        
+        if (query.includes('terancam punah')) {
+          answer = "Menurut data Badan Bahasa Kemendikbud, terdapat 718 bahasa daerah terdaftar, dengan 5 bahasa dinyatakan punah total baru-baru ini dan 8 bahasa berstatus kritis (kategori kritis terancam punah).";
+        } else if (query.includes('Borobudur')) {
+          answer = "Candi Borobudur dibangun pada abad ke-8 M oleh wangsa Syailendra dari Kerajaan Mataram Kuno. Candi ini melambangkan tingkatan perjalanan spiritual Buddhis: Kamadhatu, Rupadhatu, dan Arupadhatu.";
+        }
+
+        aiLoader.innerText = answer;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 800);
+    }
+  </script>
+</body>
+</html>
