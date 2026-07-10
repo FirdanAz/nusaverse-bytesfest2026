@@ -50,7 +50,7 @@ export const metadata: Metadata = {
       "Jelajahi kekayaan 38 provinsi, pelajari 714 bahasa daerah, dan masuki museum virtual interaktif dalam petualangan melestarikan budaya Indonesia.",
     images: [
       {
-        url: "/assets/images/indonesia_overview.png",
+        url: "/assets/images/website-preview/webprev.png",
         width: 1200,
         height: 630,
         alt: "NUSAVERSE — Budaya Nusantara dalam Dimensi Digital",
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     images: ["/assets/images/indonesia_overview.png"],
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/assets/images/icons/nusaverse-icon.svg",
   },
 };
 
