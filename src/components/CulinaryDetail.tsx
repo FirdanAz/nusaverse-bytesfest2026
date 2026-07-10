@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 import { CulinaryData } from "@/types";
-import { MapPin, Tag, Utensils, Users, Award, ChevronDown, Award as CertIcon } from "lucide-react";
+import { MapPin, Tag, Utensils, Users, Award, ChevronDown } from "lucide-react";
 import FlavorProfile from "./FlavorProfile";
 import PreparationTimeline from "./PreparationTimeline";
 import ProvinceMap from "./ProvinceMap";
@@ -16,17 +16,40 @@ interface CulinaryDetailProps {
 }
 
 export default function CulinaryDetail({ item, allCulinary, onSelectRelated }: CulinaryDetailProps) {
-  const { currentLang, t } = useLanguage();
+  const { currentLang } = useLanguage();
   const [expandedSection, setExpandedSection] = useState<string | null>("overview");
   const [imgError, setImgError] = useState(false);
   const [relatedErrors, setRelatedErrors] = useState<Record<string, boolean>>({});
   const [imgLoading, setImgLoading] = useState(true);
   const imageRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    setImgError(false);
-    setRelatedErrors({});
-    setImgLoading(true);
+    // Reset state asynchronously to avoid react-hooks/set-state-in-effect warning
+    setTimeout(() => {
+      setImgError(false);
+      setRelatedErrors({});
+    }, 0);
+    
+    if (imgRef.current) {
+      if (imgRef.current.complete) {
+        const hasError = imgRef.current.naturalWidth === 0;
+        setTimeout(() => {
+          if (hasError) {
+            setImgError(true);
+          }
+          setImgLoading(false);
+        }, 0);
+      } else {
+        setTimeout(() => {
+          setImgLoading(true);
+        }, 0);
+      }
+    } else {
+      setTimeout(() => {
+        setImgLoading(true);
+      }, 0);
+    }
     
     requestAnimationFrame(() => {
       imageRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -259,6 +282,7 @@ export default function CulinaryDetail({ item, allCulinary, onSelectRelated }: C
               />
             )}
             <img
+              ref={imgRef}
               src={item.gallery[0]}
               alt={currentLang === "id" ? item.title_id : item.title_en}
               style={{

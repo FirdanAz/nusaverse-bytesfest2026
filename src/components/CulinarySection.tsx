@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { CULINARY_DATA } from "@/data/culinaryData";
 import { UtensilsCrossed } from "lucide-react";
-import { motion } from "framer-motion";
 import CulinaryNavigation from "./CulinaryNavigation";
 import CulinaryDetail from "./CulinaryDetail";
 
 export default function CulinarySection() {
-  const { currentLang, t } = useLanguage();
+  const { currentLang } = useLanguage();
   const [activeId, setActiveId] = useState<string>("rendang");
 
   const activeCulinary = CULINARY_DATA.find((c) => c.id === activeId) || CULINARY_DATA[0];
@@ -51,6 +50,7 @@ export default function CulinarySection() {
           {/* 1. Detail Panel (65% on Desktop, Top on Mobile) */}
           <div className="culinary-detail-panel glass-card">
             <CulinaryDetail
+              key={activeCulinary.id}
               item={activeCulinary}
               allCulinary={CULINARY_DATA}
               onSelectRelated={handleSelect}
