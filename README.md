@@ -91,13 +91,16 @@ Sebelum mengumpulkan karya, hapus folder `node_modules` dan `.next` sesuai keten
 
 ## Kredit aset
 
-Ikon menggunakan Lucide React (open-source icon library). Elemen visual lain — ilustrasi, foto, dan grafis — dibuat/disediakan oleh tim.
+Ikon menggunakan Lucide React (open-source icon library). Sebagian foto 
+menggunakan stok Unsplash untuk keperluan demonstrasi konsep desain 
+(bukan dokumentasi budaya terverifikasi) — lihat disclosure lengkap di 
+footer situs. Elemen visual lain (ilustrasi, grafis kustom, layout) 
+dibuat oleh tim.
 
 ## Tim
 
 - Muhammad Firdan Azhari
 - Muhammad Syafi'i R Fikri
-- Nama — peran
 
 ## Lisensi
 
