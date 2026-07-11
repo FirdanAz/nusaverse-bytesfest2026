@@ -1702,8 +1702,8 @@ export const AI_RESPONSES: Record<string, AIResponse> = {
   bahasa: {
     id_user: "Berapa sisa bahasa daerah yang terancam punah?",
     en_user: "How many local languages are at risk of extinction?",
-    id_ai: "Dari 718 bahasa daerah yang teridentifikasi (Badan Bahasa Kemendikbud, 2024), 29 bahasa berstatus terancam punah dan 8 di antaranya sudah masuk kategori kritis. Wilayah timur Indonesia seperti Maluku dan Papua paling rentan karena penutur muda aktifnya terus menyusut.",
-    en_ai: "Of the 718 identified regional languages (Badan Bahasa, Ministry of Education, 2024), 29 are classified as endangered and 8 of those are critically endangered. Eastern Indonesia — Maluku and Papua — is most vulnerable as active young speaker numbers keep shrinking."
+    id_ai: "Dari 714 bahasa daerah yang teridentifikasi (Badan Bahasa Kemendikbud, 2024), 29 bahasa berstatus terancam punah dan 8 di antaranya sudah masuk kategori kritis. Wilayah timur Indonesia seperti Maluku dan Papua paling rentan karena penutur muda aktifnya terus menyusut.",
+    en_ai: "Of the 714 identified regional languages (Badan Bahasa, Ministry of Education, 2024), 29 are classified as endangered and 8 of those are critically endangered. Eastern Indonesia — Maluku and Papua — is most vulnerable as active young speaker numbers keep shrinking."
   },
   candi: {
     id_user: "Mengapa Candi Borobudur dibangun?",
